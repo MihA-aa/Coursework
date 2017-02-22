@@ -1,0 +1,45 @@
+﻿@using Coursework.Models
+@model IEnumerable<Step>
+
+    <ul class="sortable" id="steps">
+        @foreach (Step step in Model)
+        {
+            <li class="ui-state-default" style="width: 150px; height: 150px; background: #e6e6fa">
+                <h4>@step.NumberOfStep)@step.StepName</h4>
+                @using (Ajax.BeginForm("DeleteStep", new { id = step.Id }, new AjaxOptions { }))
+                {
+
+                    <input type="submit" value="x" id="qwerty"class="boxclose" onclick=" funcDelete() " />
+
+                }
+                @*@Html.ActionLink(" ", "DeleteStep", "Home", new { id = step.Id }, new { @class = "boxclose", id = "qwerty" })*@
+                <fieldset>
+
+                    <div class="display-label">
+                        <b>Описание</b>
+                    </div>
+                    <div class="display-field">
+                        @step.Description
+                    </div>
+                </fieldset>
+            </li>
+        }
+
+        <a href="#" class="button30" id="add" style="float: left; margin:50px">+</a>
+    </ul>
+    <script type="text/javascript">
+
+        $(function () {
+
+            $('.sortable').sortable({
+                connectWith: "#sortable"
+            });
+            $(".sortable").disableSelection();
+        });
+        $('#add').click(function () {
+            $("#add").before('<li class="ui-state-default" style="width: 150px; height: 150px; background: #e6e6fa">' +
+                '<h4>Шаг энный</h4><a class="boxclose" id="boxclose"></a><fieldset><div class="display-label"><b>Описание</b></div>' +
+                '<div class="display-field">Сделай что-нибудь</div></fieldset></li>');
+        });
+
+    </script>

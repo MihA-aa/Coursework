@@ -1,0 +1,97 @@
+﻿@using Microsoft.AspNet.Identity
+@{
+    ViewBag.Title = "Details";
+}
+<style>
+    #infa {
+        width: 30%;
+        float: left;
+        margin-right: 50px;
+        margin-left: 10px;
+        border: 1px #e6e6fa solid;
+        padding: 10px;
+    }
+
+    #wrapper {
+        overflow: hidden;
+        padding-bottom: 10px;
+        margin-bottom: 10px;
+        border: 1px #2f4f4f solid;
+    }
+
+    .sortable {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        min-height: 150px;
+        max-width: 650px;
+        border: ridge;
+    }
+
+    #steps {
+        float: left;
+    }
+
+    #stepsi {
+        float: left;
+        overflow: hidden;
+    }
+
+    .sortable li {
+        margin: 10px 3px 10px 3px;
+        padding: 1px;
+        float: left;
+        width: 120px;
+        height: 120px;
+        text-align: center;
+    }
+
+    .size-27 {
+        font-size: 27px;
+    }
+    .none:hover, .none:active {
+        text-decoration: none;
+    }
+</style>
+@if (ViewBag.Count > 0)
+{
+if (ViewBag.UserId == User.Identity.GetUserId())
+{
+    <h2>Ваши инструкции @Html.ActionLink(" ", "AddInstruction", "Home", new { id = User.Identity.GetUserId() }, new { @class = "fi-plus size-27 none" })
+</h2>
+    }
+else{
+<h2>Инструкции пользователя @ViewBag.UserName</h2>
+}
+    <div id="mainwrapper">
+        @using (Ajax.BeginForm("InstructionList", new { user_id = ViewBag.UserId }, new AjaxOptions { UpdateTargetId = "results", LoadingElementId = "loading" }))
+        {
+            <input type="submit" value="Обновить" style="display: none;" id="qwer" />
+        }
+        <div id="loading" style="display: none;">
+            <h3>Refresh...</h3>
+        </div>
+        <div id="results"></div>
+    </div>
+    
+}
+else
+{
+    if (User.Identity.GetUserId() == ViewBag.UserId)
+    {
+        <h2>У Вас пока что нет ни одной инструкции</h2>
+    }
+    else
+    {
+        <h2>Пользователь @ViewBag.UserName ещё не добавил ни одной инструкции</h2>
+    }
+}
+
+    @section scripts{
+        <script type="text/javascript">
+            $('#qwer').click();
+            function funcDelete() {
+                setTimeout(function () { $('#qwer').click() }, 1000);
+            }
+        </script>
+    }

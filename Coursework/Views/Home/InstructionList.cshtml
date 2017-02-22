@@ -1,0 +1,110 @@
+﻿@using Coursework.Models
+@using Microsoft.AspNet.Identity
+@model IEnumerable<Instruction>
+
+
+@foreach (Instruction m in Model)
+     {
+<div id="wrapper">
+
+    <h2>
+        @m.InstructionName
+        @if (m.UserId == User.Identity.GetUserId())
+        {
+            @Html.ActionLink(" ", "RedactInstruction", "Home", new { id = m.Id }, new { @class = "fi-pencil size-27 none" })
+            using (Ajax.BeginForm("DeleteInstruction", new { id = m.Id }, new AjaxOptions { }))
+            {
+
+                <input type="submit" value="x" id="qwerty" class="fi-x size-27 none" onclick="funcDelete()" />
+
+            }
+            @*@Html.ActionLink(" ", "DeleteInstruction", "Home", new { id = m.Id }, new { @class = "fi-x size-27 none" })*@
+        }
+    </h2>
+    <div id="infa">
+        <h3>Информация о инструкции</h3>
+
+        <div class="display-label">
+            <b>Категория</b>
+        </div>
+        <div class="display-field">
+            @m.Category
+        </div>
+        <br />
+        <div class="display-label">
+            <b>Автор</b>
+        </div>
+        <div class="display-field">
+            @m.Author
+        </div>
+        <br />
+        <div class="display-label">
+            <b>Видео пример</b>
+        </div>
+        <div class="display-field">
+            <a>@m.LinkToVideo</a>
+        </div>
+        <br />
+        <div class="display-label">
+            <b>Тэги</b>
+        </div>
+        <ul>
+            @foreach (Tag c in m.Tags)
+            {
+                <li>@c.TagName</li>
+            }
+        </ul>
+        <div class="display-field">
+            Лайки
+            <a class="fi-like size-27 none"></a>
+            <a class="fi-dislike size-27 none"></a>
+            @*@m.NumberOfLikes.ToString()*@
+        </div>
+        <br />
+        <div class="display-label">
+            <b>Создана</b>
+        </div>
+        <div class="display-field">
+            @m.DateOfCreation.ToString()
+        </div>
+        <br />
+        <div class="display-label">
+            <b>Комментарии</b>
+        </div>
+        <ul>
+            @foreach (Comment c in m.Comments)
+            {
+                <p>@c.UserId: </p>
+                        <p>@c.Contetnt</p>
+            }
+        </ul>
+
+    </div>
+    <div id="stepsi">
+        @if (m.Steps.Count() > 0)
+        {
+
+            <ul class="sortable" id="steps">
+                @foreach (Step step in m.Steps)
+                {
+                    <li class="ui-state-default" style="width: 150px; height: 150px; background: #e6e6fa">
+                        <h4>@step.NumberOfStep)@step.StepName</h4>
+                        <fieldset>
+                            <div class="display-label">
+                                <b>Описание</b>
+                            </div>
+                            <div class="display-field">
+                                @step.Description
+                            </div>
+                        </fieldset>
+                    </li>
+                }
+            </ul>
+        }
+        else
+        {
+            <h3>У этой инструкции еще нет шагов.</h3>
+        }
+    </div>
+</div>
+     }
