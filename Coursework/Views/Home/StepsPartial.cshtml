@@ -4,16 +4,14 @@
     <ul class="sortable" id="steps">
         @foreach (Step step in Model)
         {
-            <li class="ui-state-default" style="width: 150px; height: 150px; background: #e6e6fa">
-                <h4>@step.NumberOfStep)@step.StepName</h4>
-                @using (Ajax.BeginForm("DeleteStep", new { id = step.Id }, new AjaxOptions { }))
+            <li class="ui-state-default image-link" style="width: 150px; height: 150px;">
+                @using (Ajax.BeginForm("DeleteStep", new {id = step.Id}, new AjaxOptions {}))
                 {
-
-                    <input type="submit" value="x" id="qwerty"class="boxclose" onclick=" funcDelete() " />
-
+                    <input type="submit" value="x" id="qwerty"class="boxclose" onclick=" funcDelete() "/>
                 }
+                <img src="http://www.gemologyproject.com/wiki/images/5/5f/Placeholder.jpg" style="width: 150px; height: 150px;" />
                 @*@Html.ActionLink(" ", "DeleteStep", "Home", new { id = step.Id }, new { @class = "boxclose", id = "qwerty" })*@
-                <fieldset>
+                @*<fieldset>
 
                     <div class="display-label">
                         <b>Описание</b>
@@ -21,7 +19,8 @@
                     <div class="display-field">
                         @step.Description
                     </div>
-                </fieldset>
+                </fieldset>*@
+                <strong ><span class="index">@step.NumberOfStep</span>)@step.StepName</strong>
             </li>
         }
 
@@ -31,15 +30,26 @@
 
         $(function () {
 
-            $('.sortable').sortable({
-                connectWith: "#sortable"
+                $('.sortable').sortable({
+                connectWith: "#sortable",
+                stop: function (event, ui) {
+                    $(".image-link").each(function (index, item) {
+                        $(item).find(".index").html(index+1);
+                    });
+                }
             });
             $(".sortable").disableSelection();
         });
         $('#add').click(function () {
-            $("#add").before('<li class="ui-state-default" style="width: 150px; height: 150px; background: #e6e6fa">' +
-                '<h4>Шаг энный</h4><a class="boxclose" id="boxclose"></a><fieldset><div class="display-label"><b>Описание</b></div>' +
-                '<div class="display-field">Сделай что-нибудь</div></fieldset></li>');
+            $("#add").before('<li class="ui-state-default image-link" style="width: 150px; height: 150px;">'+
+                '    <input type="submit" value="x" id="qwerty"class="boxclose" onclick=" funcDelete() "/>' +
+                '<img src="http://www.gemologyproject.com/wiki/images/5/5f/Placeholder.jpg" style="width: 150px; height: 150px;" />' +
+                '<strong ><span class="index"></span>)Шаг</strong>' + 
+                //'<a class="boxclose" id="boxclose"></a><fieldset><div class="display-label"><b>Описание</b></div>' +
+                //'<div class="display-field">Сделай что-нибудь</div></fieldset>' +
+                '</li>');
+            $(".image-link").each(function (index, item) {
+                $(item).find(".index").html(index + 1);
+            });
         });
-
     </script>

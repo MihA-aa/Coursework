@@ -75,6 +75,7 @@ namespace Coursework.Controllers
             Instruction instructions = db.Instructions
                 .Include(s=>s.Steps)
                 .Include(s=>s.Comments)
+                .Include(s=> s.Ratings)
                 .FirstOrDefault(c => c.Id == id);
 
             if (instructions != null)

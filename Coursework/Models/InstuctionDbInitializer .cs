@@ -92,7 +92,7 @@ namespace Coursework.Models
             {
                 Id = 12,
                 StepName = "Пукнуть",
-                NumberOfStep = 12,
+                NumberOfStep = 4,
                 PathToImage = "...",
                 Description = "Делаем ПФФФФФ",
                 InstructionId = 1,
@@ -101,7 +101,7 @@ namespace Coursework.Models
             {
                 Id = 13,
                 StepName = "Взлететь",
-                NumberOfStep = 13,
+                NumberOfStep = 5,
                 PathToImage = "...",
                 Description = "Делаем крыльями взмахи",
                 InstructionId = 1,
@@ -119,7 +119,7 @@ namespace Coursework.Models
             {
                 Id = 2,
                 StepName = "Зарегестрироваться",
-                NumberOfStep = 2,
+                NumberOfStep = 1,
                 PathToImage = "...",
                 Description = "Делаем сё",
                 InstructionId = 3,
@@ -129,7 +129,7 @@ namespace Coursework.Models
             {
                 Id = 3,
                 StepName = "Сьесть",
-                NumberOfStep = 3,
+                NumberOfStep = 1,
                 PathToImage = "...",
                 Description = "Делаем то-то",
                 InstructionId = 4,

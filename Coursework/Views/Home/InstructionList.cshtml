@@ -83,12 +83,13 @@
     <div id="stepsi">
         @if (m.Steps.Count() > 0)
         {
-
             <ul class="sortable" id="steps">
                 @foreach (Step step in m.Steps)
                 {
                     <li class="ui-state-default" style="width: 150px; height: 150px; background: #e6e6fa">
-                        <h4>@step.NumberOfStep)@step.StepName</h4>
+                        <img src="http://www.gemologyproject.com/wiki/images/5/5f/Placeholder.jpg" style="width: 150px; height: 150px;" />
+
+                        @*<h4>@step.NumberOfStep)@step.StepName</h4>
                         <fieldset>
                             <div class="display-label">
                                 <b>Описание</b>
@@ -96,8 +97,9 @@
                             <div class="display-field">
                                 @step.Description
                             </div>
-                        </fieldset>
-                    </li>
+                        </fieldset>*@
+                        <strong><span>@step.NumberOfStep</span>)@step.StepName</strong>
+                </li>
                 }
             </ul>
         }
