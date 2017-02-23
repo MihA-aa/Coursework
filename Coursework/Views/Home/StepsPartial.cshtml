@@ -7,7 +7,7 @@
             <li class="ui-state-default image-link " style="width: 150px; height: 150px;">
                 @using (Ajax.BeginForm("DeleteStep", new {id = step.Id}, new AjaxOptions {}, new { style = "display: inline-block;", @class="closeform"}))
                 {
-                    <button type="submit" value="" id="qwerty" onclick=" funcDelete() " style="border: none; background: none">
+                    <button type="submit" value="" id="qwerty" onclick=" funcRefresh() " style="border: none; background: none">
                         <span class="boxclose"></span>
                     </button>
                 }
@@ -37,7 +37,7 @@
         $('#add').click(function () {
             $("#add").before('<li class="ui-state-default image-link ui-sortable-handle" style="width: 150px; height: 150px;">' +
                 '<form action="/Home/DeleteStep/8" class="closeform" data-ajax="true" id="form4" method="post" style="display: inline-block;">' +
-                '<button type="submit" value="" id="qwerty" onclick=" funcDelete() " style="border: none; background: none">'+
+                '<button type="submit" value="" id="qwerty" onclick=" funcRefresh() " style="border: none; background: none">' +
                 '<span class="boxclose"></span></button>'+
                 '</form>' +
                 '<a href="#" class="thumbnail">' +
@@ -45,11 +45,6 @@
                 '</a>'+
                 '<strong ><span class="index"></span>)Шаг</strong>' +
                 '</li>');
-             @*@using (Ajax.BeginForm("DeleteStep", new {id = step.Id}, new AjaxOptions {}, new { style = "display: inline-block;", @class="closeform"}))
-                {
-                    <button type="submit" value="" id="qwerty" onclick=" funcDelete() " style="border: none; background: none"><span class="boxclose"></span></button>
-                }*@
-                
 
             $(".image-link").each(function (index, item) {
                 $(item).find(".index").html(index + 1);

@@ -58,27 +58,27 @@
         vertical-align: middle;
         text-align: center;
         text-decoration: none;
-        text-shadow: 1px 1px rgba(255,255,255,.3);
+        text-shadow: 1px 1px rgba(255, 255, 255, .3);
         font-size: 300%;
         font-weight: 900;
         color: #000;
         border-radius: 100%;
-        background: rgb(144,142,105) linear-gradient(rgb(185,181,151), rgb(144,142,105));
-        box-shadow: inset 0 -2px 1px rgba(0,0,0,.5), inset 0 2px 1px rgba(255,255,255,.9), 0 4px 4px rgba(0,0,0,.9);
+        background: rgb(144, 142, 105) linear-gradient(rgb(185, 181, 151), rgb(144, 142, 105));
+        box-shadow: inset 0 -2px 1px rgba(0, 0, 0, .5), inset 0 2px 1px rgba(255, 255, 255, .9), 0 4px 4px rgba(0, 0, 0, .9);
     }
 
-        a.button30:after {
-            content: "";
-            position: absolute;
-            z-index: -1;
-            top: 12%;
-            left: 12%;
-            right: 12%;
-            bottom: 12%;
-            border-radius: 100%;
-            background: rgb(242,203,20) linear-gradient(rgb(242,203,20), rgb(255,182,7));
-            box-shadow: inset 0 2px 1px rgba(0,0,0,.5), inset 0 -2px 1px rgba(255,255,255,.3);
-        }
+    a.button30:after {
+        content: "";
+        position: absolute;
+        z-index: -1;
+        top: 12%;
+        left: 12%;
+        right: 12%;
+        bottom: 12%;
+        border-radius: 100%;
+        background: rgb(242, 203, 20) linear-gradient(rgb(242, 203, 20), rgb(255, 182, 7));
+        box-shadow: inset 0 2px 1px rgba(0, 0, 0, .5), inset 0 -2px 1px rgba(255, 255, 255, .3);
+    }
 
     span.boxclose {
         float: right;
@@ -102,85 +102,97 @@
         top: 20px;
         left: 70px;
     }
+    .size-27 {
+        font-size: 25px;
+    }
+    .btn-mine {
+        padding: 2px 12px;
+    }
 </style>
-<h2>@Model.InstructionName</h2>
-<div id="wrapper">
-    <div id="infa">
-        <h3>Информация о инструкции</h3>
+@using (Html.BeginForm("SaveSteps", "Home", FormMethod.Post, new {style = "display: inline-block;"}))
+{
+<h2>@Model.InstructionName
+    <button type="submit" class="btn btn-default btn-mine">
+        <span class="fi-save size-27"></span>
+    </button>
+</h2>
+}
+    <div id="wrapper">
+        <div id="infa">
+            <h3>Информация о инструкции</h3>
 
-        <div class="display-label">
-            <b>Категория</b>
-        </div>
-        <div class="display-field">
-            @Model.Category
-        </div>
-        <br />
-        <div class="display-label">
-            <b>Автор</b>
-        </div>
-        <div class="display-field">
-            @Model.Author
-        </div>
-        <br />
-        <div class="display-label">
-            <b>Видео пример</b>
-        </div>
-        <div class="display-field">
-            <a>@Model.LinkToVideo</a>
-        </div>
-        <br />
-        <div class="display-label">
-            <b>Тэги</b>
-        </div>
-        <ul>
-            @foreach (Tag c in Model.Tags)
-            {
-                <li>@c.TagName</li>
-            }
-        </ul>
-        <div class="display-field">
-            Лайки
-            <a class="fi-like size-27 none"></a>
-            <a class="fi-dislike size-27 none"></a>
-            @*@Model.NumberOfLikes.ToString()*@
-        </div>
-        <br />
-        <div class="display-label">
-            <b>Создана</b>
-        </div>
-        <div class="display-field">
-            @Model.DateOfCreation.ToString()
-        </div>
-        <br />
-        <div class="display-label">
-            <b>Комментарии</b>
-        </div>
-        <ul>
-            @foreach (Comment c in Model.Comments)
-            {
-                <p>@c.UserId: </p>
+            <div class="display-label">
+                <b>Категория</b>
+            </div>
+            <div class="display-field">
+                @Model.Category
+            </div>
+            <br/>
+            <div class="display-label">
+                <b>Автор</b>
+            </div>
+            <div class="display-field">
+                @Model.Author
+            </div>
+            <br/>
+            <div class="display-label">
+                <b>Видео пример</b>
+            </div>
+            <div class="display-field">
+                <a>@Model.LinkToVideo</a>
+            </div>
+            <br/>
+            <div class="display-label">
+                <b>Тэги</b>
+            </div>
+            <ul>
+                @foreach (Tag c in Model.Tags)
+                {
+                    <li>@c.TagName</li>
+                }
+            </ul>
+            <div class="display-field">
+                Лайки
+                <a class="fi-like size-27 none"></a>
+                <a class="fi-dislike size-27 none"></a>
+                @*@Model.NumberOfLikes.ToString()*@
+            </div>
+            <br/>
+            <div class="display-label">
+                <b>Создана</b>
+            </div>
+            <div class="display-field">
+                @Model.DateOfCreation.ToString()
+            </div>
+            <br/>
+            <div class="display-label">
+                <b>Комментарии</b>
+            </div>
+            <ul>
+                @foreach (Comment c in Model.Comments)
+                {
+                    <p>@c.UserId: </p>
                     <p>@c.Contetnt</p>
-            }
-        </ul>
+                }
+            </ul>
 
-    </div>
-    <div id="stepsi">
-
-        @using (Ajax.BeginForm("StepsPartial", new { id = Model.Id }, new AjaxOptions { UpdateTargetId = "results", LoadingElementId = "loading" }))
-        {
-            <input type="submit" value="Обновить" style="display: none;" id="qwer"/>
-        }
-        <div id="loading" style="display: none;">
-            <h3>Refresh...</h3>
         </div>
-        <div id="results"></div>
-    </div>
+        <div id="stepsi">
+            @using (Ajax.BeginForm("StepsPartial", new {id = Model.Id}, new AjaxOptions {UpdateTargetId = "results", LoadingElementId = "loading"}))
+            {
+                <input type="submit" value="Обновить" style="display: none;" id="qwer"/>
+            }
+            <div id="loading" style="display: none;">
+                <h3>Refresh...</h3>
+            </div>
+            <div id="results"></div>
+        </div>
     </div>
 
 @section scripts{
     <script type="text/javascript">
         $('#qwer').click();
-        function funcDelete() {
+        function funcRefresh() {
             setTimeout(function () { $('#qwer').click() }, 500);
         }
         

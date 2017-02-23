@@ -86,6 +86,16 @@ namespace Coursework.Controllers
         }
 
         [HttpPost]
+        public ActionResult SaveSteps(IEnumerable<Step> steps)
+        {
+
+
+
+            string returnUrl = Request.UrlReferrer.AbsolutePath;
+            return Redirect(returnUrl);
+        }
+
+        [HttpPost]
         public ActionResult StepsPartial(int id)
         {
             List<Step> list = new List<Step>();
