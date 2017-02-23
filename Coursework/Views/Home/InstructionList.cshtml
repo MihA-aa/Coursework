@@ -6,20 +6,23 @@
 @foreach (Instruction m in Model)
      {
 <div id="wrapper">
-
     <h2>
         @m.InstructionName
         @if (m.UserId == User.Identity.GetUserId())
         {
-            @Html.ActionLink(" ", "RedactInstruction", "Home", new { id = m.Id }, new { @class = "fi-pencil size-27 none" })
-            using (Ajax.BeginForm("DeleteInstruction", new { id = m.Id }, new AjaxOptions { }))
+            using (Html.BeginForm("RedactInstruction", "Home", new { id = m.Id }, FormMethod.Post, new { style = "display: inline-block;" }))
             {
-
-                <input type="submit" value="x" id="qwerty" class="fi-x size-27 none" onclick="funcDelete()" />
-
+                <button type="submit" class="btn btn-default btn-xs" value="" id="qwerty" onclick=" funcDelete() " style="border: none;">
+                    <span class="fi-pencil size-27 none " style="color: #6495ed"></span>
+                </button>
             }
-            @*@Html.ActionLink(" ", "DeleteInstruction", "Home", new { id = m.Id }, new { @class = "fi-x size-27 none" })*@
-        }
+            using (Ajax.BeginForm("DeleteInstruction", new { id = m.Id }, new AjaxOptions { }, new { style = "display: inline-block;" }))
+            {
+                <button type="submit" class="btn btn-default btn-xs" value="" id="qwerty" onclick=" funcDelete() " style="border: none;">
+                    <span class="fi-x size-27 none "style="color: #6495ed"></span>
+                </button>
+            }
+         }
     </h2>
     <div id="infa">
         <h3>Информация о инструкции</h3>
@@ -87,19 +90,11 @@
                 @foreach (Step step in m.Steps)
                 {
                     <li class="ui-state-default" style="width: 150px; height: 150px; background: #e6e6fa">
-                        <img src="http://www.gemologyproject.com/wiki/images/5/5f/Placeholder.jpg" style="width: 150px; height: 150px;" />
-
-                        @*<h4>@step.NumberOfStep)@step.StepName</h4>
-                        <fieldset>
-                            <div class="display-label">
-                                <b>Описание</b>
-                            </div>
-                            <div class="display-field">
-                                @step.Description
-                            </div>
-                        </fieldset>*@
-                        <strong><span>@step.NumberOfStep</span>)@step.StepName</strong>
-                </li>
+                        <a href="#" class="thumbnail">
+                            <img src="http://www.gemologyproject.com/wiki/images/5/5f/Placeholder.jpg" style="width: 150px; height: 150px;" />
+                        </a>
+                    <strong><span>@step.NumberOfStep</span>)@step.StepName</strong>
+</li>
                 }
             </ul>
         }

@@ -51,7 +51,7 @@ namespace Coursework.Controllers
         public ActionResult RedactInstruction(int id)
         {
             Instruction instruction = db.Instructions.FirstOrDefault(t => t.Id == id);
-            if (instruction == null)
+            if (instruction == null || instruction.UserId != User.Identity.GetUserId())
             {
                 return HttpNotFound();
             }

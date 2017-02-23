@@ -4,26 +4,19 @@
     <ul class="sortable" id="steps">
         @foreach (Step step in Model)
         {
-            <li class="ui-state-default image-link" style="width: 150px; height: 150px;">
-                @using (Ajax.BeginForm("DeleteStep", new {id = step.Id}, new AjaxOptions {}))
+            <li class="ui-state-default image-link " style="width: 150px; height: 150px;">
+                @using (Ajax.BeginForm("DeleteStep", new {id = step.Id}, new AjaxOptions {}, new { style = "display: inline-block;", @class="closeform"}))
                 {
-                    <input type="submit" value="x" id="qwerty"class="boxclose" onclick=" funcDelete() "/>
+                    <button type="submit" value="" id="qwerty" onclick=" funcDelete() " style="border: none; background: none">
+                        <span class="boxclose"></span>
+                    </button>
                 }
-                <img src="http://www.gemologyproject.com/wiki/images/5/5f/Placeholder.jpg" style="width: 150px; height: 150px;" />
-                @*@Html.ActionLink(" ", "DeleteStep", "Home", new { id = step.Id }, new { @class = "boxclose", id = "qwerty" })*@
-                @*<fieldset>
-
-                    <div class="display-label">
-                        <b>Описание</b>
-                    </div>
-                    <div class="display-field">
-                        @step.Description
-                    </div>
-                </fieldset>*@
-                <strong ><span class="index">@step.NumberOfStep</span>)@step.StepName</strong>
+                <a href="#" class="thumbnail">
+                    <img src="http://www.gemologyproject.com/wiki/images/5/5f/Placeholder.jpg" style="width: 150px; height: 150px;" />
+                </a>
+                <strong><span class="index">@step.NumberOfStep</span>)@step.StepName</strong>
             </li>
         }
-
         <a href="#" class="button30" id="add" style="float: left; margin:50px">+</a>
     </ul>
     <script type="text/javascript">
@@ -36,18 +29,28 @@
                     $(".image-link").each(function (index, item) {
                         $(item).find(".index").html(index+1);
                     });
-                }
+                },
+                items: '> :not(.button30)'
             });
             $(".sortable").disableSelection();
         });
         $('#add').click(function () {
-            $("#add").before('<li class="ui-state-default image-link" style="width: 150px; height: 150px;">'+
-                '    <input type="submit" value="x" id="qwerty"class="boxclose" onclick=" funcDelete() "/>' +
+            $("#add").before('<li class="ui-state-default image-link ui-sortable-handle" style="width: 150px; height: 150px;">' +
+                '<form action="/Home/DeleteStep/8" class="closeform" data-ajax="true" id="form4" method="post" style="display: inline-block;">' +
+                '<button type="submit" value="" id="qwerty" onclick=" funcDelete() " style="border: none; background: none">'+
+                '<span class="boxclose"></span></button>'+
+                '</form>' +
+                '<a href="#" class="thumbnail">' +
                 '<img src="http://www.gemologyproject.com/wiki/images/5/5f/Placeholder.jpg" style="width: 150px; height: 150px;" />' +
-                '<strong ><span class="index"></span>)Шаг</strong>' + 
-                //'<a class="boxclose" id="boxclose"></a><fieldset><div class="display-label"><b>Описание</b></div>' +
-                //'<div class="display-field">Сделай что-нибудь</div></fieldset>' +
+                '</a>'+
+                '<strong ><span class="index"></span>)Шаг</strong>' +
                 '</li>');
+             @*@using (Ajax.BeginForm("DeleteStep", new {id = step.Id}, new AjaxOptions {}, new { style = "display: inline-block;", @class="closeform"}))
+                {
+                    <button type="submit" value="" id="qwerty" onclick=" funcDelete() " style="border: none; background: none"><span class="boxclose"></span></button>
+                }*@
+                
+
             $(".image-link").each(function (index, item) {
                 $(item).find(".index").html(index + 1);
             });
