@@ -59,13 +59,40 @@ namespace Coursework.Controllers
         }
 
         [HttpPost]
-        public void DeleteStep(int id)
+        public void DeleteStep(int NumberOfStep, int InstructionId)
         {
-            Step step = db.Steps.FirstOrDefault(s => s.Id == id);
+            Step step = db.Steps.Where(s=> s.InstructionId == InstructionId).
+                FirstOrDefault(s => s.NumberOfStep == NumberOfStep);
             if (step != null)
             {
                 db.Steps.Remove(step);
                 db.SaveChanges();
+            }
+        }
+
+        [HttpPost]
+        public ActionResult AddStep(int NumberOfStep, int InstructionId)
+        {
+            bool isSavedSuccessfully = true;
+            try
+            {
+                Step step = new Step();
+                step.NumberOfStep = NumberOfStep;
+                step.InstructionId = InstructionId;
+                db.Steps.Add(step);
+                db.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                isSavedSuccessfully = false;
+            }
+            if (isSavedSuccessfully)
+            {
+                return Json(new { Message = "Successfully" });
+            }
+            else
+            {
+                return Json(new { Message = "Error in add step" });
             }
         }
 
@@ -103,6 +130,7 @@ namespace Coursework.Controllers
             {
                 list = db.Steps.Where(x => x.InstructionId == id).ToList();
             }
+            ViewBag.InstructionId = id;
             return PartialView(list);
         }
 

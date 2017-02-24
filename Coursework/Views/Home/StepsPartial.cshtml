@@ -5,7 +5,7 @@
         @foreach (Step step in Model)
         {
             <li class="ui-state-default image-link " style="width: 150px; height: 150px;">
-                @using (Ajax.BeginForm("DeleteStep", new {id = step.Id}, new AjaxOptions {}, new { style = "display: inline-block;", @class="closeform"}))
+                @using (Ajax.BeginForm("DeleteStep", new { NumberOfStep = step.NumberOfStep, InstructionId  = step.InstructionId}, new AjaxOptions {}, new { style = "display: inline-block;", @class="closeform"}))
                 {
                     <button type="submit" value="" id="qwerty" onclick=" funcRefresh() " style="border: none; background: none">
                         <span class="boxclose"></span>
@@ -17,12 +17,17 @@
                 <strong><span class="index">@step.NumberOfStep</span>)@step.StepName</strong>
             </li>
         }
-        <a href="#" class="button30" id="add" style="float: left; margin:50px">+</a>
+        @using (Ajax.BeginForm("AddStep", new {NumberOfStep = Model.Count(), InstructionId = ViewBag.InstructionId}, new AjaxOptions {}, new {style = "display: inline-block;", id = "addForm"}))
+        {
+            <button type="submit" id="add" style="float: left; border: none; background: none; margin: 50px; padding: 1px 2px;">
+                <span class="button30">+</span>
+            </button>
+        }
     </ul>
     <script type="text/javascript">
 
         $(function () {
-
+            x = @Model.Count();
                 $('.sortable').sortable({
                 connectWith: "#sortable",
                 stop: function (event, ui) {
@@ -35,17 +40,20 @@
             $(".sortable").disableSelection();
         });
         $('#add').click(function () {
-            $("#add").before('<li class="ui-state-default image-link ui-sortable-handle" style="width: 150px; height: 150px;">' +
-                '<form action="/Home/DeleteStep/8" class="closeform" data-ajax="true" id="form4" method="post" style="display: inline-block;">' +
+            x++;
+            var htmladd = '<li class="ui-state-default image-link ui-sortable-handle" style="width: 150px; height: 150px;">' +
+                '<form action="/Home/DeleteStep?NumberOfStep=' + x + '&InstructionId=' + @ViewBag.InstructionId + '" class="closeform" data-ajax="true" id="form4" method="post" style="display: inline-block;">' +
                 '<button type="submit" value="" id="qwerty" onclick=" funcRefresh() " style="border: none; background: none">' +
-                '<span class="boxclose"></span></button>'+
+                '<span class="boxclose"></span></button>' +
                 '</form>' +
                 '<a href="#" class="thumbnail">' +
                 '<img src="http://www.gemologyproject.com/wiki/images/5/5f/Placeholder.jpg" style="width: 150px; height: 150px;" />' +
-                '</a>'+
-                '<strong ><span class="index"></span>)Шаг</strong>' +
-                '</li>');
+                '</a>' +
+                '<strong >'+'<span class="index"></span>)Шаг</strong>' +
+                '</li>';
 
+            $("#addForm").before(htmladd);
+            $("#addForm").attr("action", "/Home/AddStep?NumberOfStep="+x+"&InstructionId=" + @ViewBag.InstructionId);
             $(".image-link").each(function (index, item) {
                 $(item).find(".index").html(index + 1);
             });
