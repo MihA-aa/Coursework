@@ -43,9 +43,13 @@
         <div class="display-label">
             <b>Категория</b>
         </div>
-        <div class="display-field">
-            @m.Category
-        </div>
+        <ul>
+            @foreach (Category c in m.Categories)
+                {
+                <li>@c.СategoryName</li>
+            }
+        </ul>
+
         <br />
         <div class="display-label">
             <b>Автор</b>
@@ -54,9 +58,6 @@
             @m.Author
         </div>
         <br />
-        <div class="display-label">
-            <b>Видео пример</b>
-        </div>
         <div class="display-label">
             <b>Тэги</b>
         </div>
@@ -68,8 +69,8 @@
         </ul>
         <div class="display-field">
             Лайки
-            <a class="fi-like size-27 none" style="color: #000000"></a>
-            <a class="fi-dislike size-27 none" style="color: #000000"></a>
+            @*<a class="fi-like size-27 none" style="color: #000000"></a>
+            <a class="fi-dislike size-27 none" style="color: #000000"></a>*@
             <a href="#" class="btn btn-default"><span class="glyphicon glyphicon-thumbs-up"></span></a>
             <a href="#" class="btn btn-default"><span class="glyphicon glyphicon-thumbs-down"></span></a>
     @*@m.NumberOfLikes.ToString()*@

@@ -47,7 +47,6 @@ namespace Coursework.Controllers
 
         }
         
-
         public ActionResult RedactInstruction(int id)
         {
             Instruction instruction = db.Instructions.FirstOrDefault(t => t.Id == id);
@@ -55,6 +54,8 @@ namespace Coursework.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.Categories = db.Categories.ToList();
+            ViewBag.Tags = db.Tags.ToList();
             return View(instruction);
         }
 
@@ -110,6 +111,40 @@ namespace Coursework.Controllers
             //return Redirect(returnUrl);
         }
 
+        [HttpPost]
+        public ActionResult SaveInstructionDescription(Instruction instruction, int[] selectedCategories, int[] selectedTags)
+        {
+            if (ModelState.IsValid) { 
+            Instruction newInstruction = db.Instructions.Find(instruction.Id);
+            newInstruction.InstructionName = instruction.InstructionName;
+            newInstruction.LinkToVideo = instruction.LinkToVideo;
+
+            newInstruction.Categories.Clear();
+            newInstruction.Tags.Clear();
+            if (selectedCategories != null)
+            {
+                foreach (var c in db.Categories.Where(co => selectedCategories.Contains(co.Id)))
+                {
+                    newInstruction.Categories.Add(c);
+                }
+            }
+            if (selectedTags != null)
+            {
+                foreach (var c in db.Tags.Where(co => selectedTags.Contains(co.Id)))
+                {
+                    newInstruction.Tags.Add(c);
+                }
+            }
+            db.Entry(newInstruction).State = EntityState.Modified;
+            db.SaveChanges();
+            }
+            else
+            {
+                ModelState.AddModelError("", "Некорректные данные");
+            }
+            string returnUrl = Request.UrlReferrer.AbsolutePath;
+            return Redirect(returnUrl);
+        }
         [HttpPost]
         public ActionResult StepsPartial(int id)
         {

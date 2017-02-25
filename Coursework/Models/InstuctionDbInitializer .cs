@@ -15,9 +15,8 @@ namespace Coursework.Models
                 Id = 1,
                 UserId = "179738bc-b1cd-45cb-a77a-c72bf94a4e42",
                 InstructionName = "Приготовление взрывной бомбы",
-                Category = "Химия",
                 Author = "Miha_aa123",
-                LinkToVideo = "...",
+                LinkToVideo = "https://www.youtube.com/watch?v=ET838We_UvE",
                 //NumberOfLikes = 5,
                 DateOfCreation = DateTime.Now
             };
@@ -25,9 +24,8 @@ namespace Coursework.Models
                 Id = 2,
                 UserId = "179738bc-b1cd-45cb-a77a-c72bf94a4e42",
                 InstructionName = "Инструкция по взрыву банкомата",
-                Category = "Преступление",
                 Author = "Miha_aa123",
-                LinkToVideo = "...",
+                LinkToVideo = "https://www.youtube.com/watch?v=ET838We_UvE",
                 //NumberOfLikes = 99,
                 DateOfCreation = DateTime.Now
             };
@@ -36,9 +34,8 @@ namespace Coursework.Models
                 Id = 3,
                 UserId = "ba47eb41-7d0a-4012-8023-4418ced312c3",
                 InstructionName = "Создание кошелька webmoney",
-                Category = "Веб-инструкция",
                 Author = "SomeUser",
-                LinkToVideo = "...",
+                LinkToVideo = "https://www.youtube.com/watch?v=ET838We_UvE",
                 //NumberOfLikes = 2,
                 DateOfCreation = DateTime.Now
             };
@@ -48,9 +45,8 @@ namespace Coursework.Models
                 Id = 4,
                 UserId = "179738bc-b1cd-45cb-a77a-c72bf94a4e42",
                 InstructionName = "Приготовление борща",
-                Category = "Кулинария",
                 Author = "Miha_aa123",
-                LinkToVideo = "...",
+                LinkToVideo = "https://www.youtube.com/watch?v=ET838We_UvE",
                 //NumberOfLikes = 22,
                 DateOfCreation = DateTime.Now
             };
@@ -226,6 +222,36 @@ namespace Coursework.Models
             context.Ratings.Add(rating3);
             context.Ratings.Add(rating4);
             context.Ratings.Add(rating5);
+
+            Category category1 = new Category
+            {
+                Id = 1,
+                СategoryName = "Химия",
+                Instructions = new List<Instruction>() {s4, s2}
+            };
+            Category category2 = new Category
+            {
+                Id = 2,
+                СategoryName = "Преступность",
+                Instructions = new List<Instruction>() { s3 }
+            };
+            Category category3 = new Category
+            {
+                Id = 3,
+                СategoryName = "Изобретение",
+                Instructions = new List<Instruction>() { s1, s3 }
+            };
+            Category category4 = new Category
+            {
+                Id = 4,
+                СategoryName = "Лайфхак",
+                Instructions = new List<Instruction>() { s1, s2, s3, s4 }
+            };
+
+            context.Categories.Add(category1);
+            context.Categories.Add(category2);
+            context.Categories.Add(category3);
+            context.Categories.Add(category4);
 
             base.Seed(context);
         }

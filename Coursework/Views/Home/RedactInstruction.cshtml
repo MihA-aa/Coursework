@@ -108,74 +108,76 @@
     .btn-mine {
         padding: 2px 12px;
     }
-</style>
-@using (Html.BeginForm("SaveSteps", "Home", FormMethod.Post, new {style = "display: inline-block;"}))
-{
-<h2>@Model.InstructionName
-    <button type="submit" class="btn btn-default btn-mine">
-        <span class="fi-save size-27"></span>
-    </button>
-</h2>
+    .field-validation-error {
+    color: #b94a48;
 }
+ 
+.field-validation-valid {
+    display: none;
+}
+ 
+input.input-validation-error {
+    border: 1px solid #b94a48;
+}
+ 
+input[type="checkbox"].input-validation-error {
+    border: 0 none;
+}
+ 
+.validation-summary-errors {
+    color: #b94a48;
+}
+ 
+.validation-summary-valid {
+    display: none;
+}
+</style>
+<h2>@Model.InstructionName</h2>
     <div id="wrapper">
         <div id="infa">
-            <h3>Информация о инструкции</h3>
-
-            <div class="display-label">
-                <b>Категория</b>
+            @using (Html.BeginForm("SaveInstructionDescription", "Home", FormMethod.Post, new { style = "display: inline-block;" }))
+            {
+                <h3>Редактировать описания</h3>
+                @Html.ValidationSummary(true)
+            @Html.HiddenFor(model => model.Id)
+            <div class="editor-label">
+                <b>@Html.LabelFor(model => model.InstructionName)</b>
             </div>
-            <div class="display-field">
-                @Model.Category
-            </div>
-            <br/>
-            <div class="display-label">
-                <b>Автор</b>
-            </div>
-            <div class="display-field">
-                @Model.Author
+            <div class="editor-field">
+                @Html.EditorFor(model => model.InstructionName)
+                @Html.ValidationMessageFor(model => model.InstructionName)
             </div>
             <br/>
-            <div class="display-label">
-                <b>Видео пример</b>
+            <div class="editor-label">
+                <b>@Html.LabelFor(model => model.Categories)</b>
             </div>
-            <div class="display-field">
-                <a>@Model.LinkToVideo</a>
-            </div>
-            <br/>
-            <div class="display-label">
-                <b>Тэги</b>
-            </div>
-            <ul>
-                @foreach (Tag c in Model.Tags)
+                foreach (Category c in ViewBag.Categories)
                 {
-                    <li>@c.TagName</li>
+                    <input type="checkbox" name="selectedCategories" value="@c.Id"
+                           @(Model.Categories.Contains(c) ? "checked=\"checked\"" : "") />@c.СategoryName <br />
                 }
-            </ul>
-            <div class="display-field">
-                Лайки
-                <a class="fi-like size-27 none"></a>
-                <a class="fi-dislike size-27 none"></a>
-                @*@Model.NumberOfLikes.ToString()*@
-            </div>
             <br/>
-            <div class="display-label">
-                <b>Создана</b>
+            <div class="editor-label">
+                <b>@Html.LabelFor(model => model.LinkToVideo)</b>
             </div>
-            <div class="display-field">
-                @Model.DateOfCreation.ToString()
-            </div>
-            <br/>
-            <div class="display-label">
-                <b>Комментарии</b>
-            </div>
-            <ul>
-                @foreach (Comment c in Model.Comments)
+                <div class="editor-field">
+                    @Html.EditorFor(model => model.LinkToVideo)
+                    @Html.ValidationMessageFor(model => model.LinkToVideo)
+                </div>
+                <br/>
+                <div class="editor-label">
+                    <b>@Html.LabelFor(model => model.Tags)</b>
+                </div>
+                foreach (Tag c in ViewBag.Tags)
                 {
-                    <p>@c.UserId: </p>
-                    <p>@c.Contetnt</p>
+                    <input type="checkbox" name="selectedTags" value="@c.Id"
+                           @(Model.Tags.Contains(c) ? "checked=\"checked\"" : "") />@c.TagName <br />
                 }
-            </ul>
-
+            <br/>
+            <button type="submit" class="btn btn-default btn-mine">
+                <span class="fi-save" style="font-size: 18px;"> Save </span>
+            </button>
+            }
         </div>
         <div id="stepsi">
             @using (Ajax.BeginForm("StepsPartial", new {id = Model.Id}, new AjaxOptions {UpdateTargetId = "results", LoadingElementId = "loading"}))
