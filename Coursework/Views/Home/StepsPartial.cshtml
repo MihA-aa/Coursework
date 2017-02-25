@@ -7,55 +7,87 @@
             <li class="ui-state-default image-link " style="width: 150px; height: 150px;">
                 @using (Ajax.BeginForm("DeleteStep", new { NumberOfStep = step.NumberOfStep, InstructionId  = step.InstructionId}, new AjaxOptions {}, new { style = "display: inline-block;", @class="closeform"}))
                 {
-                    <button type="submit" value="" id="qwerty" onclick=" funcRefresh() " style="border: none; background: none">
+                    <button type="submit" value="" class ="delete" onclick=" funcRefresh() " style="border: none; background: none">
                         <span class="boxclose"></span>
                     </button>
                 }
                 <a href="#" class="thumbnail">
                     <img src="http://www.gemologyproject.com/wiki/images/5/5f/Placeholder.jpg" style="width: 150px; height: 150px;" />
                 </a>
-                <strong><span class="index">@step.NumberOfStep</span>)@step.StepName</strong>
+                <strong><span class="index">@step.NumberOfStep</span>)<span class="step">@step.StepName</span></strong>
             </li>
         }
-        @using (Ajax.BeginForm("AddStep", new {NumberOfStep = Model.Count(), InstructionId = ViewBag.InstructionId}, new AjaxOptions {}, new {style = "display: inline-block;", id = "addForm"}))
-        {
-            <button type="submit" id="add" style="float: left; border: none; background: none; margin: 50px; padding: 1px 2px;">
+            <button id="add" style="float: left; border: none; background: none; margin: 50px; padding: 1px 2px;">
                 <span class="button30">+</span>
             </button>
-        }
     </ul>
     <script type="text/javascript">
+
+        function funcRefresh() {
+            setTimeout(function () {
+                $('#qwer').click();
+                setTimeout(function () {
+                    displayRefresh();refreshOrder();}, 250);}, 500);
+        }
+
+        function displayRefresh() {
+            $(".image-link").each(function (index, item) {
+                $(item).find(".index").html(index+1);
+                $(item).find(".closeform").attr("action", "/Home/DeleteStep?NumberOfStep="+(index+1)+"&InstructionId=" + @ViewBag.InstructionId);
+
+            });
+        }
+
+        function refreshOrder() {
+            var steps = [];
+            $("#steps>.image-link").each(function(index, item) {
+                var label= $(item).find("strong");
+                $(label).find(".step").text();
+                $(label).find(".index").text();
+                steps.push({ "StepName": $(label).find(".step").text(), "NumberOfStep": $(label).find(".index").text(), "InstructionId": @ViewBag.InstructionId});
+            });
+            console.log(steps);
+            $.ajax({
+                url: '../../Home/SaveSteps',
+                type: "post",
+                data: { "steps": steps },
+                success: function() {
+                    console.log('Load was performed.');
+                }
+            });
+        }
 
         $(function () {
             x = @Model.Count();
                 $('.sortable').sortable({
                 connectWith: "#sortable",
                 stop: function (event, ui) {
-                    $(".image-link").each(function (index, item) {
-                        $(item).find(".index").html(index+1);
-                    });
+                    displayRefresh(); refreshOrder();
                 },
-                items: '> :not(.button30)'
+                items: '> :not(#add)'
             });
             $(".sortable").disableSelection();
+        });
+        $('.delete').click(function() {
+            x--;
         });
         $('#add').click(function () {
             x++;
             var htmladd = '<li class="ui-state-default image-link ui-sortable-handle" style="width: 150px; height: 150px;">' +
                 '<form action="/Home/DeleteStep?NumberOfStep=' + x + '&InstructionId=' + @ViewBag.InstructionId + '" class="closeform" data-ajax="true" id="form4" method="post" style="display: inline-block;">' +
-                '<button type="submit" value="" id="qwerty" onclick=" funcRefresh() " style="border: none; background: none">' +
+                '<button type="submit" value="" class ="delete" onclick=" funcRefresh() " style="border: none; background: none">' +
                 '<span class="boxclose"></span></button>' +
                 '</form>' +
                 '<a href="#" class="thumbnail">' +
                 '<img src="http://www.gemologyproject.com/wiki/images/5/5f/Placeholder.jpg" style="width: 150px; height: 150px;" />' +
                 '</a>' +
-                '<strong >'+'<span class="index"></span>)Шаг</strong>' +
+                '<strong >'+'<span class="index"></span>)<span class="step">Шаг '+x+'</span></strong>' +
                 '</li>';
 
-            $("#addForm").before(htmladd);
-            $("#addForm").attr("action", "/Home/AddStep?NumberOfStep="+x+"&InstructionId=" + @ViewBag.InstructionId);
+            $("#add").before(htmladd);
             $(".image-link").each(function (index, item) {
                 $(item).find(".index").html(index + 1);
             });
+            refreshOrder();
         });
     </script>

@@ -18,7 +18,7 @@
             }
             using (Ajax.BeginForm("DeleteInstruction", new { id = m.Id }, new AjaxOptions { }, new { style = "display: inline-block; margin-right: 5px;" }))
             {
-                <button type="submit" class="btn btn-default btn-mine" id="qwerty" onclick=" funcRefresh() ">
+                <button type="submit" class="btn btn-default btn-mine" onclick=" funcRefresh() ">
                     <span class="fi-x size-27"></span>
                 </button>
             }
@@ -98,7 +98,7 @@
         @if (m.Steps.Count() > 0)
         {
             <ul class="sortable" id="steps">
-                @foreach (Step step in m.Steps)
+                @foreach (Step step in m.Steps.OrderBy(x =>x.NumberOfStep))
                 {
                     <li class="ui-state-default" style="width: 150px; height: 150px; background: #e6e6fa">
                         <a href="#" class="thumbnail">

@@ -69,33 +69,7 @@ namespace Coursework.Controllers
                 db.SaveChanges();
             }
         }
-
-        [HttpPost]
-        public ActionResult AddStep(int NumberOfStep, int InstructionId)
-        {
-            bool isSavedSuccessfully = true;
-            try
-            {
-                Step step = new Step();
-                step.NumberOfStep = NumberOfStep;
-                step.InstructionId = InstructionId;
-                db.Steps.Add(step);
-                db.SaveChanges();
-            }
-            catch (Exception ex)
-            {
-                isSavedSuccessfully = false;
-            }
-            if (isSavedSuccessfully)
-            {
-                return Json(new { Message = "Successfully" });
-            }
-            else
-            {
-                return Json(new { Message = "Error in add step" });
-            }
-        }
-
+        
         [HttpPost]
         public void DeleteInstruction(int id)
         {
@@ -115,11 +89,25 @@ namespace Coursework.Controllers
         [HttpPost]
         public ActionResult SaveSteps(IEnumerable<Step> steps)
         {
-
-
-
-            string returnUrl = Request.UrlReferrer.AbsolutePath;
-            return Redirect(returnUrl);
+            foreach (Step step in steps)
+            {
+                Step newStep = db.Steps
+                    .Where(s => s.InstructionId == step.InstructionId)
+                    .FirstOrDefault(s => s.StepName == step.StepName);
+                if (newStep == null)
+                {
+                    db.Steps.Add(step);
+                }
+                else
+                {
+                    newStep.NumberOfStep = step.NumberOfStep;
+                    db.Entry(newStep).State = EntityState.Modified;
+                }
+            db.SaveChanges();
+            }
+            return Json(new { Message = "Successfully" });
+            //string returnUrl = Request.UrlReferrer.AbsolutePath;
+            //return Redirect(returnUrl);
         }
 
         [HttpPost]
@@ -128,7 +116,9 @@ namespace Coursework.Controllers
             List<Step> list = new List<Step>();
             using (var db = new PostEntities())
             {
-                list = db.Steps.Where(x => x.InstructionId == id).ToList();
+                list = db.Steps.Where(x => x.InstructionId == id)
+                    .OrderBy(x => x.NumberOfStep)
+                    .ToList();
             }
             ViewBag.InstructionId = id;
             return PartialView(list);
@@ -158,5 +148,6 @@ namespace Coursework.Controllers
             Response.Cookies.Add(cookie);
             return Redirect(returnUrl);
         }
+        
     }
 }
