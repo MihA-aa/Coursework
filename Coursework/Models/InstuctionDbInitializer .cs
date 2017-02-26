@@ -18,6 +18,7 @@ namespace Coursework.Models
                 Author = "Miha_aa123",
                 LinkToVideo = "https://www.youtube.com/watch?v=ET838We_UvE",
                 CategoryId = 1,
+                NumberOfLikes = 53,
                 DateOfCreation = DateTime.Now
             };
             Instruction s2 = new Instruction {
@@ -27,8 +28,9 @@ namespace Coursework.Models
                 Author = "Miha_aa123",
                 LinkToVideo = "https://www.youtube.com/watch?v=ET838We_UvE",
                 CategoryId = 2,
-                DateOfCreation = DateTime.Now
-            };
+                NumberOfLikes = 99,
+                DateOfCreation = DateTime.Now.AddMonths(-1)
+        };
             Instruction s3 = new Instruction
             {
                 Id = 3,
@@ -37,8 +39,9 @@ namespace Coursework.Models
                 Author = "SomeUser",
                 LinkToVideo = "https://www.youtube.com/watch?v=ET838We_UvE",
                 CategoryId = 3,
-                DateOfCreation = DateTime.Now
-            };
+                NumberOfLikes = 11,
+                DateOfCreation = DateTime.Now.AddYears(-1)
+        };
 
             Instruction s4 = new Instruction
             {
@@ -48,8 +51,9 @@ namespace Coursework.Models
                 Author = "Miha_aa123",
                 LinkToVideo = "https://www.youtube.com/watch?v=ET838We_UvE",
                 CategoryId = 4,
-                DateOfCreation = DateTime.Now
-            };
+                NumberOfLikes = 0,
+                DateOfCreation = DateTime.Now.AddDays(-7)
+        };
 
             context.Instructions.Add(s1);
             context.Instructions.Add(s2);

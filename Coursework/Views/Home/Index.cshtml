@@ -4,25 +4,43 @@
     ViewBag.Title = "Home Page";
 }
 
-<div class="jumbotron">
-    <h1>@Resources.Resource.Hello</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+<div style="margin-top: 20px">
+    @if (ViewBag.Filter == "best")
+    {
+        <h2 id="filterheder">Лучшие инструкции</h2>
+    }
+    else if(ViewBag.Filter == "new")
+    {
+        <h2 id="filterheder">Свежие инструкции</h2>
+    }
 </div>
 
 <div class="row">
-    <div class="col-md-4">
-        <h2>Все пользователи</h2>
-        <p>
-            @foreach (var user in Model)
-            {
-                <p>
-                    <strong>
-                        @Html.ActionLink(user.UserName, "ShowInstructions", "Home", new { user_id = user.Id }, null)
-                    </strong>
-               </p>
-            }
-        </p>
+    <div id="mainwrapper">
+        @using (Ajax.BeginForm("InstructionList", new { filter = ViewBag.Filter }, new AjaxOptions { UpdateTargetId = "results", LoadingElementId = "loading" }, new {id="refreshForm"}))
+        {
+            <input type="submit" value="Обновить" style="display: none;" id="qwer" />
+        }
+        <div id="loading" style="display: none;">
+            <h3>Refresh...</h3>
+        </div>
+        <div id="results"></div>
     </div>
-    
 </div>
+@section scripts{
+    <script type="text/javascript">
+        $('#qwer').click();
+        //$('#new').click(function () {
+        //    console.log("query_new");
+        //    $('#refreshForm').attr("action", "/Home/InstructionList?filter=new");
+        //    $('#qwer').click();
+        //    $('#filterheder').html('Новые инструкции');
+        //});
+        //$('#best').click(function () {
+        //    console.log("query_best");
+        //    $('#refreshForm').attr("action", "/Home/InstructionList?filter=best");
+        //    $('#qwer').click();
+        //    $('#filterheder').html('Лучшие инструкции');
+        //});
+    </script>
+}

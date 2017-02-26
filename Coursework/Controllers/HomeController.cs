@@ -16,12 +16,20 @@ namespace Coursework.Controllers
     public class HomeController : Controller
     {
         public PostEntities db = new PostEntities();
-        public ActionResult Index()
+        public ActionResult Index(string filter)
         {
-            var context = new ApplicationDbContext();
-            var allUsers = context.Users.ToList();
-            var allRoles = context.Roles.ToList();
-            return View(allUsers);
+            if (filter == null)
+            {
+                ViewBag.Filter = "new";
+            }
+            else
+            {
+                ViewBag.Filter = filter;
+            }
+            //var context = new ApplicationDbContext();
+            //var allUsers = context.Users.ToList();
+            //var allRoles = context.Roles.ToList();
+            return View();
         }
 
         public ActionResult ShowInstructions(string user_id = "")
@@ -32,19 +40,28 @@ namespace Coursework.Controllers
             {
                 ViewBag.UserName = user.UserName;
                 ViewBag.UserId = user_id;
+                ViewBag.Filter = "MainInstruction";
                 list = db.Instructions.Where(x => x.UserId == user_id).ToList();
                 ViewBag.Count = list.Count;
                 return View();
             }
             return HttpNotFound();
         }
-        public ActionResult InstructionList(string user_id = "")
+        public ActionResult InstructionList(string user_id = "", string filter ="")
         {
-            ViewBag.UserId = user_id;
+            if (filter == "new")
+            {
+                return PartialView(db.Instructions.OrderByDescending(x => x.DateOfCreation));
+            }
+            if (filter == "best")
+            {
+                return PartialView(db.Instructions.OrderByDescending(x => x.NumberOfLikes));
+            }
+            ViewBag.UserId = User.Identity.GetUserId();
             List<Instruction> list = new List<Instruction>();
-            list = db.Instructions.Where(x => x.UserId == user_id).ToList();
+            list = db.Instructions.Where(x => x.UserId == user_id)
+                .OrderByDescending(x => x.DateOfCreation).ToList();
             return PartialView(list);
-
         }
         
         public ActionResult RedactInstruction(int id)
@@ -151,13 +168,12 @@ namespace Coursework.Controllers
         [HttpPost]
         public ActionResult CreateInstruction(Instruction instruction, int[] selectedTags)
         {
-            //if (ModelState.IsValid)
-            //{
                 instruction.UserId = User.Identity.GetUserId();
                 ApplicationUser user = System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(User.Identity.GetUserId());
                 instruction.Author = user.UserName;
                 instruction.DateOfCreation = DateTime.Now;
-                
+                instruction.NumberOfLikes = 0;
+
                 if (selectedTags != null)
                 {
                     foreach (var c in db.Tags.Where(co => selectedTags.Contains(co.Id)))
@@ -168,13 +184,6 @@ namespace Coursework.Controllers
                 db.Instructions.Add(instruction);
                 db.SaveChanges();
                 return RedirectToAction("ShowInstructions", new { user_id = User.Identity.GetUserId() });
-//}
-//            else
-//            {
-//                ModelState.AddModelError("", "Некорректные данные");
-//            }
-            string returnUrl = Request.UrlReferrer.AbsolutePath;
-            return Redirect(returnUrl);
         }
         
         [HttpPost]

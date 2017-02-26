@@ -28,6 +28,9 @@ namespace Coursework.Models
         [Display(Name = "Дата создания")]
         public DateTime DateOfCreation{ get; set; }
 
+        [Display(Name = "Количество Лайков")]
+        public int NumberOfLikes { get; set; }
+
 
         [Display(Name = "Шаги")]
         public virtual ICollection<Step> Steps { get; set; }
