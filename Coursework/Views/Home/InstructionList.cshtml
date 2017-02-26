@@ -3,8 +3,8 @@
 @model IEnumerable<Instruction>
 
 
-@foreach (Instruction m in Model)
-     {
+@foreach (Instruction m in Model.OrderByDescending(x => x.DateOfCreation))
+{
 <div id="wrapper">
     <h2>
         @m.InstructionName
@@ -43,13 +43,9 @@
         <div class="display-label">
             <b>Категория</b>
         </div>
-        <ul>
-            @foreach (Category c in m.Categories)
-                {
-                <li>@c.СategoryName</li>
-            }
-        </ul>
-
+        <div class="display-label">
+            @m.Category.СategoryName
+        </div>
         <br />
         <div class="display-label">
             <b>Автор</b>
@@ -69,11 +65,8 @@
         </ul>
         <div class="display-field">
             Лайки
-            @*<a class="fi-like size-27 none" style="color: #000000"></a>
-            <a class="fi-dislike size-27 none" style="color: #000000"></a>*@
             <a href="#" class="btn btn-default"><span class="glyphicon glyphicon-thumbs-up"></span></a>
             <a href="#" class="btn btn-default"><span class="glyphicon glyphicon-thumbs-down"></span></a>
-    @*@m.NumberOfLikes.ToString()*@
         </div>
         <br />
         <div class="display-label">
@@ -82,7 +75,8 @@
         <div class="display-field">
             @m.DateOfCreation.ToString()
         </div>
-        <br />
+        @if (m.Comments.Count > 0)
+        { <br/>
         <div class="display-label">
             <b>Комментарии</b>
         </div>
@@ -93,7 +87,7 @@
                         <p>@c.Contetnt</p>
             }
         </ul>
-
+        }
     </div>
     <div id="stepsi">
         @if (m.Steps.Count() > 0)
@@ -112,7 +106,9 @@
         }
         else
         {
-            <h3>У этой инструкции еще нет шагов.</h3>
+            <h3>У этой инструкции еще нет шагов.</h3>            
+            <p>Нажмите @Html.ActionLink("здесь", "RedactInstruction", "Home",new { id = m.Id }, null) чтобы создать первый шаг</p>
+
         }
     </div>
 </div>

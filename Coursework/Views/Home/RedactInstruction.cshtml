@@ -148,14 +148,10 @@ input[type="checkbox"].input-validation-error {
                 @Html.ValidationMessageFor(model => model.InstructionName)
             </div>
             <br/>
-            <div class="editor-label">
-                <b>@Html.LabelFor(model => model.Categories)</b>
-            </div>
-                foreach (Category c in ViewBag.Categories)
-                {
-                    <input type="checkbox" name="selectedCategories" value="@c.Id"
-                           @(Model.Categories.Contains(c) ? "checked=\"checked\"" : "") />@c.СategoryName <br />
-                }
+                <div class="editor-label">
+                    <b>@Html.LabelFor(model => model.Category.СategoryName)</b>
+                </div>
+                @Html.DropDownListFor(model => model.CategoryId, ViewBag.Categories as SelectList)
             <br/>
             <div class="editor-label">
                 <b>@Html.LabelFor(model => model.LinkToVideo)</b>

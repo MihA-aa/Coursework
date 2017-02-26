@@ -10,6 +10,8 @@ namespace Coursework.Models
     {
         public int Id { get; set; }
         public string UserId { get; set; }
+        public int? CategoryId { get; set; }
+        public virtual Category Category { get; set; }
 
         [Required(ErrorMessage = "Название не может быть пустым")]
         [StringLength(40, MinimumLength = 3, ErrorMessage = "Название должно содержать от 3 до 40 символов")]
@@ -38,9 +40,6 @@ namespace Coursework.Models
 
         [Display(Name = "Рейтинг")]
         public virtual ICollection<Rating> Ratings { get; set; }
-        
-        [Display(Name = "Категории")]
-        public virtual ICollection<Category> Categories { get; set; }
 
         public Instruction()
         {
@@ -48,7 +47,6 @@ namespace Coursework.Models
             Tags = new List<Tag>();
             Comments = new List<Comment>();
             Ratings = new List<Rating>();
-            Categories = new List<Category>();
         }
         
     }

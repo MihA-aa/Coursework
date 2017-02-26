@@ -54,7 +54,8 @@ namespace Coursework.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.Categories = db.Categories.ToList();
+            SelectList categories = new SelectList(db.Categories, "Id", "СategoryName");
+            ViewBag.Categories = categories;
             ViewBag.Tags = db.Tags.ToList();
             return View(instruction);
         }
@@ -112,22 +113,15 @@ namespace Coursework.Controllers
         }
 
         [HttpPost]
-        public ActionResult SaveInstructionDescription(Instruction instruction, int[] selectedCategories, int[] selectedTags)
+        public ActionResult SaveInstructionDescription(Instruction instruction, int[] selectedTags)
         {
             if (ModelState.IsValid) { 
             Instruction newInstruction = db.Instructions.Find(instruction.Id);
             newInstruction.InstructionName = instruction.InstructionName;
             newInstruction.LinkToVideo = instruction.LinkToVideo;
-
-            newInstruction.Categories.Clear();
+            newInstruction.CategoryId = instruction.CategoryId;
+            
             newInstruction.Tags.Clear();
-            if (selectedCategories != null)
-            {
-                foreach (var c in db.Categories.Where(co => selectedCategories.Contains(co.Id)))
-                {
-                    newInstruction.Categories.Add(c);
-                }
-            }
             if (selectedTags != null)
             {
                 foreach (var c in db.Tags.Where(co => selectedTags.Contains(co.Id)))
@@ -145,6 +139,44 @@ namespace Coursework.Controllers
             string returnUrl = Request.UrlReferrer.AbsolutePath;
             return Redirect(returnUrl);
         }
+        
+        public ActionResult CreateInstruction()
+        {
+            SelectList categories = new SelectList(db.Categories, "Id", "СategoryName");
+            ViewBag.Categories = categories;
+            ViewBag.Tags = db.Tags.ToList();
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult CreateInstruction(Instruction instruction, int[] selectedTags)
+        {
+            //if (ModelState.IsValid)
+            //{
+                instruction.UserId = User.Identity.GetUserId();
+                ApplicationUser user = System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(User.Identity.GetUserId());
+                instruction.Author = user.UserName;
+                instruction.DateOfCreation = DateTime.Now;
+                
+                if (selectedTags != null)
+                {
+                    foreach (var c in db.Tags.Where(co => selectedTags.Contains(co.Id)))
+                    {
+                        instruction.Tags.Add(c);
+                    }
+                }
+                db.Instructions.Add(instruction);
+                db.SaveChanges();
+                return RedirectToAction("ShowInstructions", new { user_id = User.Identity.GetUserId() });
+//}
+//            else
+//            {
+//                ModelState.AddModelError("", "Некорректные данные");
+//            }
+            string returnUrl = Request.UrlReferrer.AbsolutePath;
+            return Redirect(returnUrl);
+        }
+        
         [HttpPost]
         public ActionResult StepsPartial(int id)
         {

@@ -17,7 +17,7 @@ namespace Coursework.Models
                 InstructionName = "Приготовление взрывной бомбы",
                 Author = "Miha_aa123",
                 LinkToVideo = "https://www.youtube.com/watch?v=ET838We_UvE",
-                //NumberOfLikes = 5,
+                CategoryId = 1,
                 DateOfCreation = DateTime.Now
             };
             Instruction s2 = new Instruction {
@@ -26,7 +26,7 @@ namespace Coursework.Models
                 InstructionName = "Инструкция по взрыву банкомата",
                 Author = "Miha_aa123",
                 LinkToVideo = "https://www.youtube.com/watch?v=ET838We_UvE",
-                //NumberOfLikes = 99,
+                CategoryId = 2,
                 DateOfCreation = DateTime.Now
             };
             Instruction s3 = new Instruction
@@ -36,7 +36,7 @@ namespace Coursework.Models
                 InstructionName = "Создание кошелька webmoney",
                 Author = "SomeUser",
                 LinkToVideo = "https://www.youtube.com/watch?v=ET838We_UvE",
-                //NumberOfLikes = 2,
+                CategoryId = 3,
                 DateOfCreation = DateTime.Now
             };
 
@@ -47,7 +47,7 @@ namespace Coursework.Models
                 InstructionName = "Приготовление борща",
                 Author = "Miha_aa123",
                 LinkToVideo = "https://www.youtube.com/watch?v=ET838We_UvE",
-                //NumberOfLikes = 22,
+                CategoryId = 4,
                 DateOfCreation = DateTime.Now
             };
 
@@ -226,26 +226,22 @@ namespace Coursework.Models
             Category category1 = new Category
             {
                 Id = 1,
-                СategoryName = "Химия",
-                Instructions = new List<Instruction>() {s4, s2}
+                СategoryName = "Химия"
             };
             Category category2 = new Category
             {
                 Id = 2,
-                СategoryName = "Преступность",
-                Instructions = new List<Instruction>() { s3 }
+                СategoryName = "Преступность"
             };
             Category category3 = new Category
             {
                 Id = 3,
-                СategoryName = "Изобретение",
-                Instructions = new List<Instruction>() { s1, s3 }
+                СategoryName = "Изобретение"
             };
             Category category4 = new Category
             {
                 Id = 4,
-                СategoryName = "Лайфхак",
-                Instructions = new List<Instruction>() { s1, s2, s3, s4 }
+                СategoryName = "Лайфхак"
             };
 
             context.Categories.Add(category1);

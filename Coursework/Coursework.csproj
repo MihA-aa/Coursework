@@ -308,6 +308,7 @@
     <Content Include="Views\Home\RedactInstruction.cshtml" />
     <Content Include="Views\Home\StepsPartial.cshtml" />
     <Content Include="Views\Home\InstructionList.cshtml" />
+    <Content Include="Views\Home\CreateInstruction.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
