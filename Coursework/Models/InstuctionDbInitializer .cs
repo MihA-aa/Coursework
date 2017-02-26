@@ -37,7 +37,6 @@ namespace Coursework.Models
                 UserId = "ba47eb41-7d0a-4012-8023-4418ced312c3",
                 InstructionName = "Создание кошелька webmoney",
                 Author = "SomeUser",
-                LinkToVideo = "https://www.youtube.com/watch?v=ET838We_UvE",
                 CategoryId = 3,
                 NumberOfLikes = 11,
                 DateOfCreation = DateTime.Now.AddYears(-1)

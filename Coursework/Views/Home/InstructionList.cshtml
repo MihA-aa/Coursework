@@ -57,6 +57,14 @@
     .btn-mine {
         padding: 2px 12px;
     }
+    a.linkVideo {
+        color: black;
+        text-decoration: none;
+    }
+    a.linkVideo:hover {
+        color: #b31217;
+    }
+    
 </style>
 @foreach (Instruction m in Model)
 {
@@ -77,19 +85,19 @@
                     <span class="fi-x size-27"></span>
                 </button>
             }
-            using (Html.BeginForm("RedactInstruction", "Home", new { id = m.Id }, FormMethod.Post, new { style = "display: inline-block; margin-right: 5px;" }))
-            {
-                <button type="submit" class="btn btn-default btn-mine">
-                    <span class="fi-page-export-pdf size-27"></span>
-                </button>
-            }
-            using (Html.BeginForm("RedactInstruction", "Home", new { id = m.Id }, FormMethod.Post, new { style = "display: inline-block; margin-right: 5px;" }))
-            {
-                <button type="submit" class="btn btn-default btn-mine">
-                    <span class="fi-social-youtube size-27"></span>
-                </button>
-            }
         }
+        @using (Html.BeginForm("RedactInstruction", "Home", new { id = m.Id }, FormMethod.Post, new { style = "display: inline-block; margin-right: 5px;" }))
+        {
+        <button type="submit" class="btn btn-default btn-mine">
+            <span class="fi-page-export-pdf size-27"></span>
+        </button>
+        }
+        @if (m.LinkToVideo != null) {
+            <button class="btn btn-default btn-mine">
+                <a class="fi-social-youtube size-27 linkVideo"  href=@m.LinkToVideo target="_blank"></a>
+            </button>
+        }
+        
     </h2>
     <div id="infa">
         <h3>Информация о инструкции</h3>
