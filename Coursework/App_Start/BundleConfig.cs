@@ -31,6 +31,15 @@ namespace Coursework
                       "~/Content/bootstrap.css",
                       "~/Content/site.css",
                       "~/Content/foundation-icons.css"));
+
+            bundles.Add(new ScriptBundle("~/bundles/dropzonescripts").Include(
+                     "~/Scripts/dropzone/dropzone.min.js"));
+
+            bundles.Add(new StyleBundle("~/Content/dropzonescss").Include(
+                     "~/Scripts/dropzone/css/basic.css",
+                     "~/Scripts/dropzone/css/dropzone.css"));
+            bundles.Add(new StyleBundle("~/Content/Collagescss").Include(
+                     "~/Scripts/dropzone/css/style.css"));
         }
     }
 }

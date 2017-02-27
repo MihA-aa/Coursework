@@ -226,6 +226,11 @@ namespace Coursework.Controllers
             return PartialView(list);
         }
 
+        public ActionResult SaveUploadedFile()
+        {
+            return Json(new { Message = "Error in saving file" });
+        }
+
         public ActionResult ChangeCulture(string lang)
         {
             string returnUrl = Request.UrlReferrer.AbsolutePath;

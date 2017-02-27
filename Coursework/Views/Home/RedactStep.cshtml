@@ -40,39 +40,90 @@
         display: none;
     }
 </style>
-
 <div id="infa">
-    @using (Html.BeginForm("RedactStep", "Home", FormMethod.Post, new { style = "display: inline-block;" }))
-            {
+    @using (Html.BeginForm("RedactStep", "Home", FormMethod.Post, new {style = "display: inline-block;"}))
+    {
         <h3>Редактировать описания</h3>
-                @Html.ValidationSummary(true)
-                @Html.HiddenFor(model => model.Id)
-                <div class="editor-label">
-                    <b>@Html.LabelFor(model => model.StepName)</b>
-                </div>
-                <div class="editor-field">
-                    @Html.EditorFor(model => model.StepName)
-                    @Html.ValidationMessageFor(model => model.StepName)
-                </div>
-                <br />
-                <div class="editor-label">
-                    <b>@Html.LabelFor(model => model.PathToImage)</b>
-                </div>
-                <div class="editor-field">
-                    @Html.EditorFor(model => model.PathToImage)
-                    @Html.ValidationMessageFor(model => model.PathToImage)
-                </div>
-                <br />
-                <div class="editor-label">
-                    <b>@Html.LabelFor(model => model.Description)</b>
-                </div>
-                <div class="editor-field">
-                    @Html.TextAreaFor(model => model.Description, 5, 50, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.Description)
-                </div>
-                <br />
-            <button type="submit" class="btn btn-default btn-mine">
-                <span class="fi-save" style="font-size: 18px;"> Save </span>
-            </button>
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.Id)
+        <div class="editor-label">
+            <b>@Html.LabelFor(model => model.StepName)</b>
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.StepName)
+            @Html.ValidationMessageFor(model => model.StepName)
+        </div>
+        <br/>
+        <div class="editor-label">
+            <b>@Html.LabelFor(model => model.PathToImage)</b>
+        </div>
+
+        <br/>
+        <div class="editor-label">
+            <b>@Html.LabelFor(model => model.Description)</b>
+        </div>
+        <div class="editor-field">
+            @Html.TextAreaFor(model => model.Description, 5, 50, new {@class = "form-control"})
+            @Html.ValidationMessageFor(model => model.Description)
+        </div>
+        <br/>
+        <button type="submit" class="btn btn-default btn-mine">
+            <span class="fi-save" style="font-size: 18px;"> Save </span>
+        </button>
     }
 </div>
+<div class="jumbotron" style="float: left; width: 700px;">
+    <form action="~/Home/SaveUploadedFile" method="post" enctype="multipart/form-data" class="dropzone" id="dropzoneForm">
+        <div class="fallback">
+            <input name="file" type="file" multiple />
+            <input type="submit" value="Upload" />
+        </div>
+    </form>
+</div>
+@section scripts{
+
+    <script type="text/javascript">
+
+        //File Upload response from the server
+        Dropzone.options.dropzoneForm = {
+            maxFiles: 2,
+            init: function () {
+                this.on("maxfilesexceeded", function (data) {
+                    var res = eval('(' + data.xhr.responseText + ')');
+
+                });
+                this.on("addedfile", function (file) {
+
+                    // Create the remove button
+                    var removeButton = Dropzone.createElement("<button>Remove file</button>");
+
+
+                    // Capture the Dropzone instance as closure.
+                    var _this = this;
+
+                    // Listen to the click event
+                    removeButton.addEventListener("click", function (e) {
+                        // Make sure the button click doesn't submit the form:
+                        e.preventDefault();
+                        e.stopPropagation();
+                        // Remove the file preview.
+                        _this.removeFile(file);
+                        // If you want to the delete the file on the server as well,
+                        // you can do the AJAX request here.
+                    });
+
+                    // Add the button to the file preview element.
+                    file.previewElement.appendChild(removeButton);
+                    //window.location.replace("/Home/UploadImage");
+                });
+                this.on("complete", function () {
+                    //window.location.replace("/Home/UploadImage");
+                });
+            }
+        //    $(function() {
+
+        //});
+
+        };
+    </script>
+}

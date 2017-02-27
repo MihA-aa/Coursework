@@ -223,3 +223,4 @@ C:\Users\Михаил\Desktop\Itransition\git\Coursework\Coursework\obj\Debug\Co
 C:\Users\Михаил\Desktop\Itransition\git\Coursework\Coursework\obj\Debug\en\Coursework.resources.dll
 C:\Users\Михаил\Desktop\Itransition\git\Coursework\Coursework\obj\Debug\Coursework.dll
 C:\Users\Михаил\Desktop\Itransition\git\Coursework\Coursework\obj\Debug\Coursework.pdb
+C:\Users\Михаил\Desktop\Itransition\git\Coursework\Coursework\bin\CloudinaryDotNet.dll
