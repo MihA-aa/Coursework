@@ -78,7 +78,7 @@ else{
             <input type="submit" value="Обновить" style="display: none;" id="qwer" />
         }
         <div id="loading" style="display: none;">
-            <h3>Refresh...</h3>
+            <img src="@Href("~/Content/default.gif")" style="display: table;margin: 0 auto;" />
         </div>
         <div id="results"></div>
     </div>
@@ -100,7 +100,7 @@ else
         <script type="text/javascript">
             $('#qwer').click();
             function funcRefresh() {
-                setTimeout(function () { $('#qwer').click() }, 1000);
+                setTimeout(function () { $('#qwer').click() }, 1500);
             }
         </script>
     }
