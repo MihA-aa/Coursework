@@ -11,7 +11,7 @@
                         <span class="boxclose"></span>
                     </button>
                 }
-                <a href="#" class="thumbnail">
+                <a href='@Url.Action("RedactStep", "Home", new {NumberOfStep = step.NumberOfStep, InstructionId  = step.InstructionId})' class="thumbnail">
                     <img src="http://www.gemologyproject.com/wiki/images/5/5f/Placeholder.jpg" style="width: 150px; height: 150px;" />
                 </a>
                 <strong><span class="index">@step.NumberOfStep</span>)<span class="step">@step.StepName</span></strong>
@@ -34,7 +34,7 @@
             $(".image-link").each(function (index, item) {
                 $(item).find(".index").html(index+1);
                 $(item).find(".closeform").attr("action", "/Home/DeleteStep?NumberOfStep="+(index+1)+"&InstructionId=" + @ViewBag.InstructionId);
-
+                $(item).find(".thumbnail").attr("href", "/Home/RedactStep?NumberOfStep=" + (index + 1) + "&InstructionId=" + @ViewBag.InstructionId);
             });
         }
 
@@ -78,7 +78,7 @@
                 '<button type="submit" value="" class ="delete" onclick=" funcRefresh() " style="border: none; background: none">' +
                 '<span class="boxclose"></span></button>' +
                 '</form>' +
-                '<a href="#" class="thumbnail">' +
+                '<a href="/Home/RedactStep?NumberOfStep=' + x + '&InstructionId=' + @ViewBag.InstructionId + '" class="thumbnail">' +
                 '<img src="http://www.gemologyproject.com/wiki/images/5/5f/Placeholder.jpg" style="width: 150px; height: 150px;" />' +
                 '</a>' +
                 '<strong >'+'<span class="index"></span>)<span class="step">Шаг '+x+'</span></strong>' +

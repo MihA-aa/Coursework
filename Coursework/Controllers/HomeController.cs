@@ -122,8 +122,8 @@ namespace Coursework.Controllers
                     newStep.NumberOfStep = step.NumberOfStep;
                     db.Entry(newStep).State = EntityState.Modified;
                 }
-            db.SaveChanges();
             }
+            db.SaveChanges();
             return Json(new { Message = "Successfully" });
             //string returnUrl = Request.UrlReferrer.AbsolutePath;
             //return Redirect(returnUrl);
@@ -185,7 +185,33 @@ namespace Coursework.Controllers
                 db.SaveChanges();
                 return RedirectToAction("ShowInstructions", new { user_id = User.Identity.GetUserId() });
         }
-        
+
+        public ActionResult RedactStep(int NumberOfStep, int InstructionId)
+        {
+            Step step = db.Steps.Where(s => s.InstructionId == InstructionId).
+                FirstOrDefault(s => s.NumberOfStep == NumberOfStep);
+            Instruction instruction = db.Instructions.FirstOrDefault(i => i.Id == step.InstructionId);
+            
+            if (instruction == null  || step == null || instruction.UserId != User.Identity.GetUserId())
+            {
+                return HttpNotFound();
+            }
+            return View(step);
+        }
+
+        [HttpPost]
+        public ActionResult RedactStep(Step step)
+        {
+            Step newStep = db.Steps.Find(step.Id);
+            newStep.StepName = step.StepName;
+            newStep.PathToImage = step.PathToImage;
+            newStep.Description = step.Description;
+
+            db.Entry(newStep).State = EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("RedactInstruction", new { id = newStep.InstructionId });
+        }
+
         [HttpPost]
         public ActionResult StepsPartial(int id)
         {

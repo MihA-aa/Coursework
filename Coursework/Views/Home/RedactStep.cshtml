@@ -1,0 +1,78 @@
+﻿@using Coursework.Models
+@model Step
+@{
+    ViewBag.Title = "RedactStep";
+}
+
+<h2>Редактирование шага</h2>
+
+<style>
+    #infa {
+        width: 30%;
+        float: left;
+        margin-right: 50px;
+        margin-left: 10px;
+        border: 1px #e6e6fa solid;
+        padding: 10px;
+    }
+
+    .field-validation-error {
+        color: #b94a48;
+    }
+
+    .field-validation-valid {
+        display: none;
+    }
+
+    input.input-validation-error {
+        border: 1px solid #b94a48;
+    }
+
+    input[type="checkbox"].input-validation-error {
+        border: 0 none;
+    }
+
+    .validation-summary-errors {
+        color: #b94a48;
+    }
+
+    .validation-summary-valid {
+        display: none;
+    }
+</style>
+
+<div id="infa">
+    @using (Html.BeginForm("RedactStep", "Home", FormMethod.Post, new { style = "display: inline-block;" }))
+            {
+        <h3>Редактировать описания</h3>
+                @Html.ValidationSummary(true)
+                @Html.HiddenFor(model => model.Id)
+                <div class="editor-label">
+                    <b>@Html.LabelFor(model => model.StepName)</b>
+                </div>
+                <div class="editor-field">
+                    @Html.EditorFor(model => model.StepName)
+                    @Html.ValidationMessageFor(model => model.StepName)
+                </div>
+                <br />
+                <div class="editor-label">
+                    <b>@Html.LabelFor(model => model.PathToImage)</b>
+                </div>
+                <div class="editor-field">
+                    @Html.EditorFor(model => model.PathToImage)
+                    @Html.ValidationMessageFor(model => model.PathToImage)
+                </div>
+                <br />
+                <div class="editor-label">
+                    <b>@Html.LabelFor(model => model.Description)</b>
+                </div>
+                <div class="editor-field">
+                    @Html.TextAreaFor(model => model.Description, 5, 50, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Description)
+                </div>
+                <br />
+            <button type="submit" class="btn btn-default btn-mine">
+                <span class="fi-save" style="font-size: 18px;"> Save </span>
+            </button>
+    }
+</div>
