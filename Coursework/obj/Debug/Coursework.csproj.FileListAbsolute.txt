@@ -216,7 +216,6 @@ C:\Users\Михаил\Desktop\Itransition\git\Coursework\Coursework\bin\Microsof
 C:\Users\Михаил\Desktop\Itransition\git\Coursework\Coursework\bin\Microsoft.Owin.Security.Google.xml
 C:\Users\Михаил\Desktop\Itransition\git\Coursework\Coursework\bin\Microsoft.Owin.Security.Twitter.xml
 C:\Users\Михаил\Desktop\Itransition\git\Coursework\Coursework\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
-C:\Users\Михаил\Desktop\Itransition\git\Coursework\Coursework\obj\Debug\Coursework.csprojResolveAssemblyReference.cache
 C:\Users\Михаил\Desktop\Itransition\git\Coursework\Coursework\obj\Debug\Coursework.Resources.Resource.resources
 C:\Users\Михаил\Desktop\Itransition\git\Coursework\Coursework\obj\Debug\Coursework.Resources.Resource.en.resources
 C:\Users\Михаил\Desktop\Itransition\git\Coursework\Coursework\obj\Debug\Coursework.csproj.GenerateResource.Cache
@@ -224,3 +223,4 @@ C:\Users\Михаил\Desktop\Itransition\git\Coursework\Coursework\obj\Debug\en
 C:\Users\Михаил\Desktop\Itransition\git\Coursework\Coursework\obj\Debug\Coursework.dll
 C:\Users\Михаил\Desktop\Itransition\git\Coursework\Coursework\obj\Debug\Coursework.pdb
 C:\Users\Михаил\Desktop\Itransition\git\Coursework\Coursework\bin\CloudinaryDotNet.dll
+C:\Users\Михаил\Desktop\Itransition\git\Coursework\Coursework\obj\Debug\Coursework.csprojResolveAssemblyReference.cache

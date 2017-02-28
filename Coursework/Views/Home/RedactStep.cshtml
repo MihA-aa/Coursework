@@ -9,7 +9,6 @@
 <style>
     #infa {
         width: 30%;
-        float: left;
         margin-right: 50px;
         margin-left: 10px;
         border: 1px #e6e6fa solid;
@@ -39,11 +38,30 @@
     .validation-summary-valid {
         display: none;
     }
+    .linkBack{
+        color: black;
+        text-decoration: none;
+    }
+    .linkBack:hover{
+        color: black;
+        text-decoration: none;
+    }
 </style>
 <div id="infa">
+    <div class="editor-label">
+        <b>@Html.LabelFor(model => model.PathToImage)</b>
+    </div>
+    <div class="jumbotron" style="float: left; width: 170px; height: 200px;">
+        <form action="~/Home/SaveUploadedFile?stepId=@Model.Id" method="post" enctype="multipart/form-data" class="dropzone" id="dropzoneForm" style="min-height: 150px;     min-width: 117px;
+    position: relative; top: -22px; left: -35px; padding: 0px;">
+            <div class="fallback">
+                <input name="file" type="file" multiple />
+                <input type="submit" value="Upload" />
+            </div>
+        </form>
+    </div>
     @using (Html.BeginForm("RedactStep", "Home", FormMethod.Post, new {style = "display: inline-block;"}))
     {
-        <h3>Редактировать описания</h3>
         @Html.ValidationSummary(true)
         @Html.HiddenFor(model => model.Id)
         <div class="editor-label">
@@ -53,11 +71,6 @@
             @Html.EditorFor(model => model.StepName)
             @Html.ValidationMessageFor(model => model.StepName)
         </div>
-        <br/>
-        <div class="editor-label">
-            <b>@Html.LabelFor(model => model.PathToImage)</b>
-        </div>
-
         <br/>
         <div class="editor-label">
             <b>@Html.LabelFor(model => model.Description)</b>
@@ -70,23 +83,21 @@
         <button type="submit" class="btn btn-default btn-mine">
             <span class="fi-save" style="font-size: 18px;"> Save </span>
         </button>
+        <button class="btn btn-default btn-mine" >
+            <span class="fi-x" style="font-size: 18px;">
+                @Html.ActionLink(" Cancel ", "RedactInstruction", "Home", new { id = Model.InstructionId }, new { @class = "linkBack" })
+            </span>
+        </button>
     }
 </div>
-<div class="jumbotron" style="float: left; width: 700px;">
-    <form action="~/Home/SaveUploadedFile" method="post" enctype="multipart/form-data" class="dropzone" id="dropzoneForm">
-        <div class="fallback">
-            <input name="file" type="file" multiple />
-            <input type="submit" value="Upload" />
-        </div>
-    </form>
-</div>
+
 @section scripts{
 
     <script type="text/javascript">
 
         //File Upload response from the server
         Dropzone.options.dropzoneForm = {
-            maxFiles: 2,
+            maxFiles: 1,
             init: function () {
                 this.on("maxfilesexceeded", function (data) {
                     var res = eval('(' + data.xhr.responseText + ')');

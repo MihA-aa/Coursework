@@ -9,6 +9,9 @@ using Coursework.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using System.Data.Entity;
+using System.IO;
+using CloudinaryDotNet;
+using CloudinaryDotNet.Actions;
 
 namespace Coursework.Controllers
 {
@@ -204,7 +207,6 @@ namespace Coursework.Controllers
         {
             Step newStep = db.Steps.Find(step.Id);
             newStep.StepName = step.StepName;
-            newStep.PathToImage = step.PathToImage;
             newStep.Description = step.Description;
 
             db.Entry(newStep).State = EntityState.Modified;
@@ -226,9 +228,76 @@ namespace Coursework.Controllers
             return PartialView(list);
         }
 
-        public ActionResult SaveUploadedFile()
+        public ActionResult SaveUploadedFile(int stepId)
         {
-            return Json(new { Message = "Error in saving file" });
+            bool isSavedSuccessfully = true;
+            string fName = "";
+            try
+            {
+                foreach (string fileName in Request.Files)
+                {
+                    HttpPostedFileBase file = Request.Files[fileName];
+                    //Save file content goes here
+                    fName = file.FileName;
+                    if (file != null && file.ContentLength > 0)
+                    {
+
+                        //var originalDirectory = new System.IO.DirectoryInfo(string.Format("{0}Images\\WallImages", Server.MapPath(@"\")));
+
+                        //string pathString = System.IO.Path.Combine(originalDirectory.ToString(), "imagepath");
+
+                        //var fileName1 = Path.GetFileName(file.FileName);
+
+
+                        //bool isExists = Directory.Exists(pathString);
+
+                        //if (!isExists)
+                        //    Directory.CreateDirectory(pathString);
+
+                        //var path = string.Format("{0}\\{1}", pathString, file.FileName);
+                        //file.SaveAs(path);
+
+                        //Account account = new Account(
+                        //    "fogolan",
+                        //    "393293335414884",
+                        //    "N7O41a-Nl9VpX4nDuzGagsUxeFA");
+                        //Cloudinary cloudinary = new Cloudinary(account);
+                        //var uploadParams = new ImageUploadParams()
+                        //{
+                        //    File = new FileDescription(path)
+                        //};
+                        //var uploadResult = cloudinary.Upload(uploadParams);
+                        //var imageuri = uploadResult.Uri;
+                        //var userid = User.Identity.GetUserId();
+
+                        //FileInfo deletedFile = new FileInfo(path);
+                        //deletedFile.Delete();
+
+                        Step newStep = db.Steps.Find(stepId);
+                        //newStep.PathToImage = uploadResult.Uri.AbsolutePath;
+                        newStep.PathToImage = "someAdress";
+                            db.Entry(newStep).State = EntityState.Modified;
+                            db.SaveChanges();
+                        return RedirectToAction("Index", "RedactStep", new { NumberOfStep = newStep.NumberOfStep, InstructionId = newStep.InstructionId });
+                    }
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                isSavedSuccessfully = false;
+            }
+
+
+            if (isSavedSuccessfully)
+            {
+                return Json(new { Message = fName });
+            }
+            else
+            {
+                return Json(new { Message = "Error in saving file" });
+            }
         }
 
         public ActionResult ChangeCulture(string lang)
