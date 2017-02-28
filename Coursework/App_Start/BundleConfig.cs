@@ -30,7 +30,10 @@ namespace Coursework
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css",
-                      "~/Content/foundation-icons.css"));
+                      "~/Content/foundation-icons.css",
+                      "~/Content/pe-icon-social/css/pe-icon-social.css",
+                      "~/Content/pe-icon-social/css/helper.css",
+                      "~/Content/pe-icon-social/css/social-style.css"));
 
             bundles.Add(new ScriptBundle("~/bundles/dropzonescripts").Include(
                      "~/Scripts/dropzone/dropzone.min.js"));
