@@ -156,8 +156,9 @@ namespace Coursework.Controllers
             {
                 ModelState.AddModelError("", "Некорректные данные");
             }
-            string returnUrl = Request.UrlReferrer.AbsolutePath;
-            return Redirect(returnUrl);
+            return RedirectToAction("ShowInstructions", new { user_id = User.Identity.GetUserId() });
+            //string returnUrl = Request.UrlReferrer.AbsolutePath;
+            //return Redirect(returnUrl);
         }
         
         public ActionResult CreateInstruction()
@@ -296,6 +297,25 @@ namespace Coursework.Controllers
             else
             {
                 return Json(new { Message = "Error in saving file" });
+            }
+        }
+
+        [Authorize]
+        public void DeletePhoto(int id)
+        {
+            var db = new PostEntities();
+            Step step = db.Steps.Find(id);
+            if (step != null)
+            {
+                string[] path = step.PathToImage.Split('/', '.').ToArray();
+                Account account = new Account(
+                           "fogolan",
+                           "393293335414884",
+                           "N7O41a-Nl9VpX4nDuzGagsUxeFA");
+                Cloudinary cloudinary = new Cloudinary(account);
+                cloudinary.DeleteResources(path[5]);
+                step.PathToImage = null;
+                db.SaveChanges();
             }
         }
 

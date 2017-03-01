@@ -46,19 +46,66 @@
         color: black;
         text-decoration: none;
     }
+    
+    span.boxclose {
+        float: right;
+        cursor: pointer;
+        color: #fff;
+        border: 1px solid #AEAEAE;
+        border-radius: 30px;
+        background: #605F61;
+        font-size: 31px;
+        font-weight: bold;
+        display: inline-block;
+        line-height: 0px;
+        padding: 11px 3px;
+        margin-bottom: -13px;
+    }
+
+    .boxclose:before {
+        content: "×";
+    }
+    .size-27 {
+        font-size: 25px;
+    }
 </style>
 <div id="infa">
     <div class="editor-label">
         <b>@Html.LabelFor(model => model.PathToImage)</b>
     </div>
-    <div class="jumbotron" style="float: left; width: 170px; height: 200px;">
-        <form action="~/Home/SaveUploadedFile?stepId=@Model.Id" method="post" enctype="multipart/form-data" class="dropzone" id="dropzoneForm" style="min-height: 150px;     min-width: 117px;
-    position: relative; top: -22px; left: -35px; padding: 0px;">
-            <div class="fallback">
-                <input name="file" type="file" multiple />
-                <input type="submit" value="Upload" />
+    <div id="rendImage">
+        @if (Model.PathToImage != null)
+        {
+            <div style="width: 150px; height: 150px; margin-bottom: 50px;" id="imagePlace">
+                <button class="delete" onclick=" DeleteIMGrender()" style="border: none; background: none; margin-left: 130px; ">
+                    <span class="boxclose"></span>
+                </button>
+                <a href='#' class="thumbnail">
+                    <img src="http://res.cloudinary.com/@Model.PathToImage" style="width:150px; height: 150px; object-fit: cover;" />
+                </a>
             </div>
-        </form>
+            <div class="jumbotron" style="float: left; width: 170px; height: 200px; display:none;">
+                <form action="~/Home/SaveUploadedFile?stepId=@Model.Id" method="post" enctype="multipart/form-data" class="dropzone" id="dropzoneForm" style="min-height: 150px;     min-width: 117px;
+    position: relative; top: -22px; left: -35px; padding: 0px;">
+                    <div class="fallback">
+                        <input name="file" type="file" multiple />
+                        <input type="submit" value="Upload" />
+                    </div>
+                </form>
+            </div>
+        }
+        else
+        {
+            <div class="jumbotron" style="float: left; width: 170px; height: 200px;">
+                <form action="~/Home/SaveUploadedFile?stepId=@Model.Id" method="post" enctype="multipart/form-data" class="dropzone" id="dropzoneForm" style="min-height: 150px;     min-width: 117px;
+    position: relative; top: -22px; left: -35px; padding: 0px;">
+                    <div class="fallback">
+                        <input name="file" type="file" multiple />
+                        <input type="submit" value="Upload" />
+                    </div>
+                </form>
+            </div>
+        }
     </div>
     @using (Html.BeginForm("RedactStep", "Home", FormMethod.Post, new {style = "display: inline-block;"}))
     {
@@ -85,7 +132,7 @@
         </button>
         <button class="btn btn-default btn-mine" >
             <span class="fi-x" style="font-size: 18px;">
-                @Html.ActionLink(" Cancel ", "RedactInstruction", "Home", new { id = Model.InstructionId }, new { @class = "linkBack" })
+                @Html.ActionLink(" Cancel ", "RedactInstruction", "Home", new { id = Model.InstructionId }, new { @class = "linkBack", onclick = " Cancel()" })
             </span>
         </button>
     }
@@ -94,10 +141,50 @@
 @section scripts{
 
     <script type="text/javascript">
+        var x = 0;
+        function DeleteIMG() {
+            $.ajax({
+                url: '../../Home/DeletePhoto',
+                type: "post",
+                data: { "id": @Model.Id },
+                success: function () {
+                    console.log('Load was performed.');
+                }
+            });
+        }
+        function DeleteIMGrender() {
+            $("#imagePlace").attr("style","width: 150px; height: 150px; margin-bottom: 50px; display:none;");
+            $("#rendImage").find(".jumbotron").attr("style","float: left; width: 170px; height: 200px; display:block;");
+            DeleteIMG();
+        }
 
+        function Cancel() {
+            if(x == 1){
+                DeleteIMG();
+            }
+        }
         //File Upload response from the server
         Dropzone.options.dropzoneForm = {
             maxFiles: 1,
+            //resize: function(file) {
+            //    var info;
+
+            //    // drawImage(image, srcX, srcY, srcWidth, srcHeight, trgX, trgY, trgWidth, trgHeight) takes an image, clips it to
+            //    // the rectangle (srcX, srcY, srcWidth, srcHeight), scales it to dimensions (trgWidth, trgHeight), and draws it
+            //    // on the canvas at coordinates (trgX, trgY).
+            //    info = {
+            //        srcX:0,
+            //        srcY:0,
+            //        srcWidth: file.width,
+            //        srcHeight: file.height,
+            //        trgX:0,
+            //        trgY:0,
+            //        trgWidth: this.options.thumbnailWidth,
+            //        trgHeight: parseInt(this.options.thumbnailWidth * file.height / file.width)
+            //    }
+
+            //    return info;
+            //},
             init: function () {
                 this.on("maxfilesexceeded", function (data) {
                     var res = eval('(' + data.xhr.responseText + ')');
@@ -119,8 +206,7 @@
                         e.stopPropagation();
                         // Remove the file preview.
                         _this.removeFile(file);
-                        // If you want to the delete the file on the server as well,
-                        // you can do the AJAX request here.
+                        DeleteIMG();
                     });
 
                     // Add the button to the file preview element.
@@ -128,6 +214,7 @@
                     //window.location.replace("/Home/UploadImage");
                 });
                 this.on("complete", function () {
+                    x = 1;
                     //window.location.replace("/Home/UploadImage");
                 });
             }
