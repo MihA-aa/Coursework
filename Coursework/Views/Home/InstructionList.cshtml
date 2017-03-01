@@ -163,7 +163,14 @@
                 {
                     <li class="ui-state-default" style="width: 150px; height: 150px; background: #e6e6fa">
                         <a href="#" class="thumbnail">
+                         @if (step.PathToImage != null)
+                         {
+                            <img src="http://res.cloudinary.com/@step.PathToImage" style="width: 150px; height: 150px;" />
+                         }
+                         else
+                         {
                             <img src="http://www.gemologyproject.com/wiki/images/5/5f/Placeholder.jpg" style="width: 150px; height: 150px;" />
+                         }
                         </a>
                     <strong class ="str1"><span>@step.NumberOfStep</span>)@step.StepName</strong>
 </li>

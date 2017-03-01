@@ -242,43 +242,42 @@ namespace Coursework.Controllers
                     if (file != null && file.ContentLength > 0)
                     {
 
-                        //var originalDirectory = new System.IO.DirectoryInfo(string.Format("{0}Images\\WallImages", Server.MapPath(@"\")));
+                        var originalDirectory = new System.IO.DirectoryInfo(string.Format("{0}Images\\WallImages", Server.MapPath(@"\")));
 
-                        //string pathString = System.IO.Path.Combine(originalDirectory.ToString(), "imagepath");
+                        string pathString = System.IO.Path.Combine(originalDirectory.ToString(), "imagepath");
 
-                        //var fileName1 = Path.GetFileName(file.FileName);
+                        var fileName1 = Path.GetFileName(file.FileName);
 
 
-                        //bool isExists = Directory.Exists(pathString);
+                        bool isExists = Directory.Exists(pathString);
 
-                        //if (!isExists)
-                        //    Directory.CreateDirectory(pathString);
+                        if (!isExists)
+                            Directory.CreateDirectory(pathString);
 
-                        //var path = string.Format("{0}\\{1}", pathString, file.FileName);
-                        //file.SaveAs(path);
+                        var path = string.Format("{0}\\{1}", pathString, file.FileName);
+                        file.SaveAs(path);
 
-                        //Account account = new Account(
-                        //    "fogolan",
-                        //    "393293335414884",
-                        //    "N7O41a-Nl9VpX4nDuzGagsUxeFA");
-                        //Cloudinary cloudinary = new Cloudinary(account);
-                        //var uploadParams = new ImageUploadParams()
-                        //{
-                        //    File = new FileDescription(path)
-                        //};
-                        //var uploadResult = cloudinary.Upload(uploadParams);
-                        //var imageuri = uploadResult.Uri;
-                        //var userid = User.Identity.GetUserId();
+                        Account account = new Account(
+                            "dlbbb5rfm",
+                            "445784172274727",
+                            "6l4Wqxed7JpDS-SCLEcLyZTKd9s");
+                        Cloudinary cloudinary = new Cloudinary(account);
+                        var uploadParams = new ImageUploadParams()
+                        {
+                            File = new FileDescription(path)
+                        };
+                        var uploadResult = cloudinary.Upload(uploadParams);
+                        var imageuri = uploadResult.Uri;
+                        var userid = User.Identity.GetUserId();
 
-                        //FileInfo deletedFile = new FileInfo(path);
-                        //deletedFile.Delete();
+                        FileInfo deletedFile = new FileInfo(path);
+                        deletedFile.Delete();
 
                         Step newStep = db.Steps.Find(stepId);
-                        //newStep.PathToImage = uploadResult.Uri.AbsolutePath;
-                        newStep.PathToImage = "someAdress";
+                        newStep.PathToImage = uploadResult.Uri.AbsolutePath;
                             db.Entry(newStep).State = EntityState.Modified;
                             db.SaveChanges();
-                        return RedirectToAction("Index", "RedactStep", new { NumberOfStep = newStep.NumberOfStep, InstructionId = newStep.InstructionId });
+                        //return RedirectToAction("Index", "RedactStep", new { NumberOfStep = newStep.NumberOfStep, InstructionId = newStep.InstructionId });
                     }
 
                 }

@@ -64,7 +64,7 @@ namespace Coursework.Models
                 Id = 1,
                 StepName = "Купить",
                 NumberOfStep = 1,
-                PathToImage = "...",
+                PathToImage = "dlbbb5rfm/image/upload/v1488371525/vz4hwqqv4l28vfdk830g.jpg",
                 Description = "Делаем то",
                 InstructionId = 1,
             };
@@ -73,7 +73,7 @@ namespace Coursework.Models
                 Id = 2,
                 StepName = "Приготовить",
                 NumberOfStep = 2,
-                PathToImage = "...",
+                PathToImage = "dlbbb5rfm/image/upload/v1486490026/fmcyzedpohginppwub3z.jpg",
                 Description = "Делаем сё",
                 InstructionId = 1,
 
@@ -83,7 +83,7 @@ namespace Coursework.Models
                 Id = 3,
                 StepName = "Поджечь",
                 NumberOfStep = 3,
-                PathToImage = "...",
+                PathToImage = "dlbbb5rfm/image/upload/v1486490210/j5ybzzear7vmnugsebjq.jpg",
                 Description = "Делаем то-то",
                 InstructionId = 1,
             };
@@ -92,7 +92,6 @@ namespace Coursework.Models
                 Id = 12,
                 StepName = "Пукнуть",
                 NumberOfStep = 4,
-                PathToImage = "...",
                 Description = "Делаем ПФФФФФ",
                 InstructionId = 1,
             };
@@ -101,7 +100,6 @@ namespace Coursework.Models
                 Id = 13,
                 StepName = "Взлететь",
                 NumberOfStep = 5,
-                PathToImage = "...",
                 Description = "Делаем крыльями взмахи",
                 InstructionId = 1,
             };
@@ -110,7 +108,7 @@ namespace Coursework.Models
                 Id = 1,
                 StepName = "Нати",
                 NumberOfStep = 1,
-                PathToImage = "...",
+                PathToImage = "dlbbb5rfm/image/upload/v1486479558/avsqiedwdkoaiyu3y9bi.jpg",
                 Description = "Делаем бла-бла",
                 InstructionId = 2,
             };
@@ -119,7 +117,7 @@ namespace Coursework.Models
                 Id = 2,
                 StepName = "Зарегестрироваться",
                 NumberOfStep = 1,
-                PathToImage = "...",
+                PathToImage = "dlbbb5rfm/image/upload/v1486473970/ba95tdwj33ezhi2t2hyq.jpg",
                 Description = "Делаем сё",
                 InstructionId = 3,
 
@@ -129,7 +127,7 @@ namespace Coursework.Models
                 Id = 3,
                 StepName = "Сьесть",
                 NumberOfStep = 1,
-                PathToImage = "...",
+                PathToImage = "dlbbb5rfm/image/upload/v1486412817/w9ktonkmifgfs4g8h6u6.jpg",
                 Description = "Делаем то-то",
                 InstructionId = 4,
             };

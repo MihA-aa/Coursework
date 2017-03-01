@@ -9,6 +9,7 @@
     @Styles.Render("~/Content/dropzonescss")
     @Scripts.Render("~/bundles/modernizr")
 </head>
+
 <body>
 <div class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
@@ -18,12 +19,14 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
+            @if(User.Identity.GetUserId()!= null) { 
             <ul class="nav navbar-nav">
                 <li @(@ViewBag.Filter == "MainInstruction" ? "class=active" : "")>
                     @Html.ActionLink("Мои инструкции", "ShowInstructions", "Home", new {user_id = User.Identity.GetUserId()}, new {@class = "navbar-brand"})
                 </li>
             </ul>
-</div>
+            }
+        </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
                 <li @(@ViewBag.Filter == "best" ? "class=active" : "")>@Html.ActionLink("Лучшее", "Index", "Home", new { filter = "best" },null)</li>
